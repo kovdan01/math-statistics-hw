@@ -1,0 +1,1826 @@
+
+    
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+	\usepackage[T2A,T1]{fontenc}
+	%\usepackage[utf8x]{inputenc}
+	\usepackage[english,russian]{babel}
+    
+    \usepackage[breakable]{tcolorbox}
+    \tcbset{nobeforeafter} % prevents tcolorboxes being placing in paragraph*s
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    
+    %\usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    %\usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    \usepackage{pscyr}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Домашнее задание 4. Проверка статистических гипотез}
+    \author{Ковалев Д., СКБ171}
+    \date{}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \newcommand{\prompt}[4]{
+        \llap{{\color{#2}[#3]: #4}}\vspace{-1.25em}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+    % Переносы математики.
+    \begingroup
+    \catcode`\+\active\gdef+{\mathchar8235\nobreak\discretionary{}{\usefont{OT1}{cmr}{m}{n}\char43}{}}
+    \catcode`\-\active\gdef-{\mathchar8704\nobreak\discretionary{}{\usefont{OMS}{cmsy}{m}{n}\char0}{}}
+    \catcode`\=\active\gdef={\mathchar12349\nobreak\discretionary{}{\usefont{OT1}{cmr}{m}{n}\char61}{}}
+    \catcode`\<\active\gdef<{\mathchar"313C\nobreak\discretionary{}{\usefont{OML}{cmm}{m}{n}\char60}{}}
+    \catcode`\>\active\gdef>{\mathchar"313E\nobreak\discretionary{}{\usefont{OML}{cmm}{m}{n}\char62}{}}
+    \endgroup
+    \def\times{\mathchar8706\nobreak\discretionary{}{\usefont{OMS}{cmsy}{m}{n}\char2}{}}
+    \def\subset{\mathchar"321A\nobreak\discretionary{}{\usefont{OMS}{cmsy}{m}{n}\char26}{}}
+    %\supset,\subseteq,\notin
+    \def\supset{\mathchar"321B\nobreak\discretionary{}{\usefont{OMS}{cmsy}{m}{n}\char27}{}}
+    \def\subseteq{\mathchar"3212\nobreak\discretionary{}{\usefont{OMS}{cmsy}{m}{n}\char18}{}}
+    \def\neq{\not=\nobreak\discretionary{}{\usefont{OMS}{cmsy}{m}{n}\char54\usefont{OT1}{cmr}{m}{n}\char61}{}}
+    \def\sim{\mathchar"3218\nobreak\discretionary{}{\usefont{OMS}{cmsy}{m}{n}\char24}{}}
+    \def\in{\mathchar"3232\nobreak\discretionary{}{\usefont{OMS}{cmsy}{m}{n}\char50}{}}
+    \def\to{\mathchar"3221\nobreak\discretionary{}{\usefont{OMS}{cmsy}{m}{n}\char33}{}}
+    \def\?#1{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}}
+    % Конец переносов математики.    
+    
+    \setlength{\parindent}{0cm}
+
+    \begin{document}
+    
+    \begingroup \catcode`\"=12
+    \gdef\newmcodes@{\mathcode`\'39\mathcode`\*42\mathcode`\."613A%
+    	\mathcode`\-"8000\mathcode`\/47\mathcode`\:"603A\relax}%
+    \endgroup
+    \mathcode`\=="8000 \mathcode`\+="8000 \mathcode`\-="8000
+    \mathcode`\<="8000 \mathcode`\>="8000
+    
+    \maketitle
+    
+
+    \hypertarget{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux445ux438-ux43aux432ux430ux434ux440ux430ux442-ux43fux438ux440ux441ux43eux43dux430}{%
+\subsubsection*{Критерий согласия хи-квадрат
+(Пирсона)}\label{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux445ux438-ux43aux432ux430ux434ux440ux430ux442-ux43fux438ux440ux441ux43eux43dux430}}
+
+Проверяем гипотезу \(H_0\): случайная величина распределена по закону
+\(\xi\) с параметром \(\theta\).
+
+Для проверки гипотезы с использованием этого критерия необходимо
+сгруппировать наблюдения. Допустим, есть \(n\) наблюдений, и мы
+разбиваем их по \(k\) интервалам с граничными точками
+\(x_{(0)},x_{(1)},\ldots,x_{(k)}\). Здесь \(x_{(0)}\) --- нижняя грань
+области распределения случайной величины, \(x_{(k)}\) --- верхняя грань.
+
+Посчитаем теоретические вероятности попадания в \(i\)-й интервал:
+\(p_i=F_{\xi}\left(x_i\right)-F_{\xi}\left(x_{i-1}\right)\),
+\(i=\overline{1,k}\). Пусть в \(i\)-й интервал попало \(n_i\)
+наблюдений, тогда для проверки гипотезы критерием хи-квадрат нужно
+измерить отклонение \(\dfrac{n_i}{n}\) от \(p_i\).
+
+В данном критерии используется статистика
+\(\chi^2=n\sum\limits_{i=1}^{k}\dfrac{\left(p_i-\dfrac{n_i}{n}\right)^2}{p_i}\).
+Для нахождения числа интервалов будем использовать формулу Старджесса:
+\(k=\log_2{n}+1\) в случае непрерывных распределений, а для дискретных
+будем брать в качестве числа интервалов максимальное значение, которое
+принимает случайная величина
+
+Эта статистика при \(n\rightarrow \infty\) имеет распределение
+\(\chi^2\) с \(r=k-1\) степенями свободы.
+
+Для выбранного уровня значимости \(\alpha\) по таблице распределения
+\(\chi^2\) ищем критическое значение \(\chi^2_{\alpha,r}\). Если
+посчитанная статистика больше критического значения, гипотеза \(H_0\)
+отвергается, иначе --- принимается.
+
+\textbf{Достоинство критерия:} можно использовать как для дискретных,
+так и для непрерывных распределений.
+
+\textbf{Недостаток критерия:} зависимость от объема выборки
+(рассматриваемая статистика имеет распределение \(\chi^2\) только при
+\(n\to\infty\)).
+
+\hypertarget{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux445ux438-ux43aux432ux430ux434ux440ux430ux442-ux434ux43bux44f-ux441ux43bux43eux436ux43dux43eux439-ux433ux438ux43fux43eux442ux435ux437ux44b}{%
+\subsubsection*{Критерий согласия хи-я сложной
+гипотезы}\label{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux445ux438-ux43aux432ux430ux434ux440ux430ux442-ux434ux43bux44f-ux441ux43bux43eux436ux43dux43eux439-ux433ux438ux43fux43eux442ux435ux437ux44b}}
+
+В этом случае у нас нет изначального предположения о параметре
+распределения \(\theta\), поэтому вместо него берется
+\(\hat{\theta}_{ОМП}\). Далее действовать нужно аналогично написанному
+ранее.
+
+    \hypertarget{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux43aux43eux43bux43cux43eux433ux43eux440ux43eux432ux430-ux441ux43cux438ux440ux43dux43eux432ux430-ux434ux43bux44f-ux430ux431ux441ux43eux43bux44eux442ux43dux43e-ux43dux435ux43fux440ux435ux440ux44bux432ux43dux44bux445-ux440ux430ux441ux43fux440ux435ux434ux435ux43bux435ux43dux438ux439}{%
+\subsubsection*{Критерий согласия Колмогорова-Смирнова (для абсолютно
+непрерывных
+распределений)}\label{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux43aux43eux43bux43cux43eux433ux43eux440ux43eux432ux430-ux441ux43cux438ux440ux43dux43eux432ux430-ux434ux43bux44f-ux430ux431ux441ux43eux43bux44eux442ux43dux43e-ux43dux435ux43fux440ux435ux440ux44bux432ux43dux44bux445-ux440ux430ux441ux43fux440ux435ux434ux435ux43bux435ux43dux438ux439}}
+
+Проверяем гипотезу \(H_0\): случайная величина распределена по закону
+\(\xi\) с параметром \(\theta\).
+
+В данном критерии используется статистика Колмогорова:
+\(D_n=\max{\left|\hat{F}_n(x)-F_{\xi}(x)\right|}\)
+
+При \(n\rightarrow\infty\)
+\(\mathbb{P}\left(D_n\sqrt{n} \geq \lambda\right)\) стремится к
+распределению Колмогорова:
+
+\(\mathbb{P}(\lambda)=1 - \sum\limits_{k=-\infty}^{+\infty}(-1)^ke^{-2k^2\lambda^2}\)
+
+Критерий: если \(D_n\sqrt{n} \leq \lambda_{\alpha}\), то гипотеза
+принимается (\(\alpha\) - уровень значимости, \(\lambda_{\alpha}\) -
+табличное значение).
+
+\textbf{Достоинство критерия:} критерий работает как для малых, так и
+для больших объемов выборок.
+
+\textbf{Недостаток критерия:} критерий неприменим для дискретных
+распределений
+
+\hypertarget{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux43aux43eux43bux43cux43eux433ux43eux440ux43eux432ux430-ux441ux43cux438ux440ux43dux43eux432ux430-ux434ux43bux44f-ux441ux43bux43eux436ux43dux43eux439-ux433ux438ux43fux43eux442ux435ux437ux44b-ux434ux43bux44f-ux430ux431ux441ux43eux43bux44eux442ux43dux43e-ux43dux435ux43fux440ux435ux440ux44bux432ux43dux44bux445-ux440ux430ux441ux43fux440ux435ux434ux435ux43bux435ux43dux438ux439}{%
+\subsubsection*{Критерий согласия Колмогорова-Смирнова для сложной гипотезы
+(для абсолютно непрерывных
+распределений)}\label{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux43aux43eux43bux43cux43eux433ux43eux440ux43eux432ux430-ux441ux43cux438ux440ux43dux43eux432ux430-ux434ux43bux44f-ux441ux43bux43eux436ux43dux43eux439-ux433ux438ux43fux43eux442ux435ux437ux44b-ux434ux43bux44f-ux430ux431ux441ux43eux43bux44eux442ux43dux43e-ux43dux435ux43fux440ux435ux440ux44bux432ux43dux44bux445-ux440ux430ux441ux43fux440ux435ux434ux435ux43bux435ux43dux438ux439}}
+
+В этом случае у нас нет изначального предположения о параметре
+распределения \(\theta\), поэтому вместо него берется
+\(\hat{\theta}_{ОМП}\). Далее действовать нужно аналогично написанному
+ранее.
+
+    \hypertarget{ux43aux440ux438ux442ux435ux440ux438ux439-ux43eux434ux43dux43eux440ux43eux434ux43dux43eux441ux442ux438-ux43aux43eux43bux43cux43eux433ux43eux440ux43eux432ux430-ux441ux43cux438ux440ux43dux43eux432ux430}{%
+\subsubsection*{Критерий однородности
+Колмогорова-Смирнова}\label{ux43aux440ux438ux442ux435ux440ux438ux439-ux43eux434ux43dux43eux440ux43eux434ux43dux43eux441ux442ux438-ux43aux43eux43bux43cux43eux433ux43eux440ux43eux432ux430-ux441ux43cux438ux440ux43dux43eux432ux430}}
+
+Для определения, принадлежат ли две выборки одному и тому же
+распределению, используется критерий однородности Колмогорова-Смирнова.
+Гипотеза \(H_0\): функции распределения двух выборок одинаковы.
+
+Положим \(n\), \(m\) --- объемы двух сравниваемых выборок,
+\(\hat{F}_{n},\; \hat{F}_{m}\) --- эмпирические функции распределения,
+построенные по ним этих выборок, то статистика критерия имеет вид:
+\(\lambda=\sqrt{\dfrac{nm}{n+m}} \cdot \max \left| \hat{F}_{n} - \hat{F}_{m}\right|\)
+
+Для уровня значимости \(\alpha\) ищем \(\lambda_\alpha\) --- табличное
+критическое значение статистики. Критерий: если
+\(\lambda \leq \lambda_\alpha\), гипотеза \(H_0\) принимается.
+
+Критерий применяется, если истинная функция распределения \(F_{\xi}\)
+непрерывна.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{os}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{tqdm}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{k+kn}{from} \PY{n+nn}{scipy} \PY{k}{import} \PY{n}{special}\PY{p}{,} \PY{n}{stats}\PY{p}{,} \PY{n}{optimize}
+\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats} \PY{k}{import} \PY{n}{pearsonr}\PY{p}{,} \PY{n}{mstats}
+\PY{k+kn}{from} \PY{n+nn}{bisect} \PY{k}{import} \PY{n}{bisect\PYZus{}left}\PY{p}{,} \PY{n}{bisect\PYZus{}right}
+\PY{k+kn}{import} \PY{n+nn}{functools}
+\PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{plt}\PY{o}{.}\PY{n}{rcParams}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{font.size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n}{sample\PYZus{}count} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{10}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{10}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{5}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{build\PYZus{}edf}\PY{p}{(}\PY{n}{emperical\PYZus{}data}\PY{p}{,} \PY{n}{return\PYZus{}y}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}
+    \PY{n}{length} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{emperical\PYZus{}data}\PY{p}{)}
+    \PY{k}{if} \PY{n}{length} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+        \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Emperical data must have length 1 or more}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{y\PYZus{}values} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{n}{prev} \PY{o}{=} \PY{k+kc}{None}
+    \PY{n}{counter}\PY{p}{,} \PY{n}{total} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}
+    \PY{k}{for} \PY{n}{entry} \PY{o+ow}{in} \PY{n}{emperical\PYZus{}data}\PY{p}{:}
+        \PY{k}{if} \PY{n}{prev} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{:}
+            \PY{n}{prev} \PY{o}{=} \PY{n}{entry}
+        \PY{k}{if} \PY{n}{entry} \PY{o}{==} \PY{n}{prev}\PY{p}{:}
+            \PY{n}{counter} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+        \PY{k}{else}\PY{p}{:}
+            \PY{n}{y\PYZus{}values} \PY{o}{+}\PY{o}{=} \PY{n}{counter} \PY{o}{*} \PY{p}{[}\PY{n}{total} \PY{o}{/} \PY{n}{length}\PY{p}{]}
+            \PY{n}{prev} \PY{o}{=} \PY{n}{entry}
+            \PY{n}{counter} \PY{o}{=} \PY{l+m+mi}{1}
+        \PY{n}{total} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+    \PY{n}{y\PYZus{}values} \PY{o}{+}\PY{o}{=} \PY{n}{counter} \PY{o}{*} \PY{p}{[}\PY{n}{total} \PY{o}{/} \PY{n}{length}\PY{p}{]}
+    
+    \PY{k}{if} \PY{n}{return\PYZus{}y}\PY{p}{:}
+        \PY{k}{return} \PY{n}{y\PYZus{}values}
+
+    \PY{k}{def} \PY{n+nf}{edf}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{emperical\PYZus{}data}\PY{o}{=}\PY{n}{emperical\PYZus{}data}\PY{p}{,} \PY{n}{y\PYZus{}values}\PY{o}{=}\PY{n}{y\PYZus{}values}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if} \PY{n}{x} \PY{o}{\PYZlt{}} \PY{n}{emperical\PYZus{}data}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{:}
+            \PY{k}{return} \PY{l+m+mf}{0.0}
+        \PY{k}{return} \PY{n}{y\PYZus{}values}\PY{p}{[}\PY{n}{bisect\PYZus{}right}\PY{p}{(}\PY{n}{emperical\PYZus{}data}\PY{p}{,} \PY{n}{x}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{]}
+    
+    \PY{k}{return} \PY{n}{edf}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{find\PYZus{}max\PYZus{}diff}\PY{p}{(}\PY{n}{data1}\PY{p}{,} \PY{n}{data2}\PY{p}{)}\PY{p}{:}
+    \PY{n}{i}\PY{p}{,} \PY{n}{j} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}
+    \PY{n}{n}\PY{p}{,} \PY{n}{m} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{data1}\PY{p}{)}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{data2}\PY{p}{)}
+    \PY{k}{def} \PY{n+nf}{find\PYZus{}next}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{n}{m}\PY{p}{)}\PY{p}{:}
+        \PY{n}{new} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+        \PY{k}{if} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{n}{n} \PY{o+ow}{and} \PY{n}{j} \PY{o}{\PYZlt{}} \PY{n}{m}\PY{p}{:}
+            \PY{k}{if} \PY{n}{data1}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{data2}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{:}
+                \PY{n}{new} \PY{o}{=} \PY{n}{data1}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+                \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n}{new} \PY{o}{=} \PY{n}{data2}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+                \PY{n}{j} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+        \PY{k}{elif} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{n}{n}\PY{p}{:}
+            \PY{n}{new} \PY{o}{=} \PY{n}{data1}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+            \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+        \PY{k}{elif} \PY{n}{j} \PY{o}{\PYZlt{}} \PY{n}{m}\PY{p}{:}
+            \PY{n}{new} \PY{o}{=} \PY{n}{data2}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+            \PY{n}{j} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+        \PY{k}{while} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{n}{n} \PY{o+ow}{and} \PY{n}{data1}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{n}{new}\PY{p}{:}
+            \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+        \PY{k}{while} \PY{n}{j} \PY{o}{\PYZlt{}} \PY{n}{m} \PY{o+ow}{and} \PY{n}{data2}\PY{p}{[}\PY{n}{j}\PY{p}{]} \PY{o}{==} \PY{n}{new}\PY{p}{:}
+            \PY{n}{j} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+        \PY{k}{return} \PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{)}
+    \PY{n}{ret} \PY{o}{=} \PY{l+m+mi}{0}
+    \PY{k}{while} \PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{)} \PY{o}{!=} \PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{m}\PY{p}{)}\PY{p}{:}
+        \PY{n}{ret} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{n}{ret}\PY{p}{,} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{i} \PY{o}{/} \PY{n}{n} \PY{o}{\PYZhy{}} \PY{n}{j} \PY{o}{/} \PY{n}{m}\PY{p}{)}\PY{p}{)}
+        \PY{n}{i}\PY{p}{,} \PY{n}{j} \PY{o}{=} \PY{n}{find\PYZus{}next}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{j}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{n}{m}\PY{p}{)}
+    \PY{k}{return} \PY{n}{ret}
+\end{Verbatim}
+\end{tcolorbox}
+
+\newpage
+    Функция для генерации выборок
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{generate\PYZus{}samples}\PY{p}{(}\PY{n}{function}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}\PY{p}{:}
+    \PY{n}{ret} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+    \PY{k}{for} \PY{n}{size} \PY{o+ow}{in} \PY{n}{sample\PYZus{}count}\PY{p}{:}
+        \PY{n}{ret}\PY{p}{[}\PY{n}{size}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{n}{function}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{n}{size}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{]}
+    \PY{k}{return} \PY{n}{ret}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{chi2\PYZus{}quantiles} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{chi2\PYZus{}quantiles.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{;}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{index\PYZus{}col}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{count}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{chi2\PYZus{}quantiles}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{7}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+            0.9      0.95       0.1       0.05
+count
+1      0.015791  0.003932  2.705543   3.841459
+2      0.210721  0.102587  4.605170   5.991465
+3      0.584374  0.351846  6.251389   7.814728
+4      1.063623  0.710723  7.779440   9.487729
+5      1.610308  1.145476  9.236357  11.070498
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{find\PYZus{}chi2}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{,} \PY{n}{cdf}\PY{p}{,} \PY{n}{minimum}\PY{p}{,} \PY{n}{maximum}\PY{p}{,} \PY{n}{is\PYZus{}discrete}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}
+    \PY{n}{n} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{)}
+    \PY{k}{if} \PY{n}{is\PYZus{}discrete}\PY{p}{:}
+        \PY{n}{k} \PY{o}{=} \PY{n}{maximum} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+    \PY{k}{else}\PY{p}{:}
+        \PY{n}{k} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log2}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}
+    \PY{n}{edges} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{n}{minimum}\PY{p}{,} \PY{n}{maximum}\PY{p}{,} \PY{n}{k} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+    \PY{n}{p\PYZus{}arr}\PY{p}{,} \PY{n}{n\PYZus{}arr} \PY{o}{=} \PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{p}{]}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{:}
+        \PY{n}{p\PYZus{}arr}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{cdf}\PY{p}{(}\PY{n}{edges}\PY{p}{[}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{cdf}\PY{p}{(}\PY{n}{edges}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+        \PY{n}{n\PYZus{}arr}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{bisect\PYZus{}right}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{,} \PY{n}{edges}\PY{p}{[}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{bisect\PYZus{}right}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{,} \PY{n}{edges}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+    \PY{n}{p\PYZus{}arr}\PY{p}{,} \PY{n}{n\PYZus{}arr} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{p\PYZus{}arr}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{n\PYZus{}arr}\PY{p}{)}
+    \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{k}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{chi2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{n} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{(}\PY{n}{p\PYZus{}arr} \PY{o}{\PYZhy{}} \PY{n}{n\PYZus{}arr} \PY{o}{/} \PY{n}{n}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{/} \PY{p}{(}\PY{n}{p\PYZus{}arr}\PY{p}{)}\PY{p}{)}\PY{p}{\PYZcb{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{find\PYZus{}dn}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{,} \PY{n}{cdf}\PY{p}{)}\PY{p}{:}
+    \PY{n}{ret} \PY{o}{=} \PY{l+m+mi}{0}
+    \PY{n}{n} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{entry} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{)}\PY{p}{:}
+        \PY{n}{ret} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{n}{ret}\PY{p}{,} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{cdf}\PY{p}{(}\PY{n}{entry}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{/} \PY{n}{n}\PY{p}{)}\PY{p}{,} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{cdf}\PY{p}{(}\PY{n}{entry}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{i} \PY{o}{/} \PY{n}{n}\PY{p}{)}\PY{p}{)}
+    \PY{k}{return} \PY{n}{ret}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lambdas} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0.1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{1.22}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0.05}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{1.36}\PY{p}{\PYZcb{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{ux440ux430ux441ux43fux440ux435ux434ux435ux43bux435ux43dux438ux435-ux446ux438ux43fux444ux430-ux434ux438ux441ux43aux440ux435ux442ux43dux43eux435}{%
+\section*{Распределение Ципфа
+(дискретное)}\label{ux440ux430ux441ux43fux440ux435ux434ux435ux43bux435ux43dux438ux435-ux446ux438ux43fux444ux430-ux434ux438ux441ux43aux440ux435ux442ux43dux43eux435}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} функция вероятности}
+\PY{k}{def} \PY{n+nf}{zipf\PYZus{}pmf}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{N}\PY{p}{)}\PY{p}{:} \PY{k}{return} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{/} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{n}{s}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{l+m+mi}{1} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{N}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{n}{s}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} функция распределения}
+\PY{k}{def} \PY{n+nf}{zipf\PYZus{}cdf}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{N}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{n+nb}{isinstance}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n+nb}{int}\PY{p}{)} \PY{o+ow}{or} \PY{n+nb}{isinstance}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n+nb}{float}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{zipf\PYZus{}pmf}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{floor}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{N}\PY{p}{)}\PY{p}{)}
+    \PY{n}{ret} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{x}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+        \PY{n}{ret}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{zipf\PYZus{}pmf}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{floor}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{N}\PY{p}{)}\PY{p}{)}
+    \PY{k}{return} \PY{n}{ret}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{zipf\PYZus{}random}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{N}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+    \PY{n}{uni\PYZus{}random} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{uniform}\PY{o}{.}\PY{n}{rvs}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{n}{size}\PY{p}{,} \PY{p}{)}
+    \PY{n}{ticks} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+    \PY{n}{ret} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{k}{for} \PY{n}{elem} \PY{o+ow}{in} \PY{n}{uni\PYZus{}random}\PY{p}{:}
+        \PY{k}{if} \PY{n}{elem} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{ticks}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:}
+            \PY{n}{ret}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{bisect\PYZus{}left}\PY{p}{(}\PY{n}{ticks}\PY{p}{,} \PY{n}{elem}\PY{p}{)}\PY{p}{)}
+        \PY{k}{else}\PY{p}{:}
+            \PY{n}{cur} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{ticks}\PY{p}{)}
+            \PY{k}{while} \PY{n}{ticks}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZlt{}} \PY{n}{elem}\PY{p}{:}
+                \PY{n}{ticks}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{ticks}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{zipf\PYZus{}pmf}\PY{p}{(}\PY{n}{cur}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{N}\PY{p}{)}\PY{p}{)}
+                \PY{n}{cur} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+            \PY{n}{ret}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{cur} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}
+    \PY{k}{return} \PY{n}{ret}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Выберем для моделирования параметры \(s=1.5\) и \(N=10\)
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{zipf\PYZus{}s} \PY{o}{=} \PY{l+m+mf}{1.5}
+\PY{n}{zipf\PYZus{}N} \PY{o}{=} \PY{l+m+mi}{15}
+\PY{n}{zipf\PYZus{}samples} \PY{o}{=} \PY{n}{generate\PYZus{}samples}\PY{p}{(}\PY{n}{zipf\PYZus{}random}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{n}{zipf\PYZus{}s}\PY{p}{,} \PY{n}{N}\PY{o}{=}\PY{n}{zipf\PYZus{}N}\PY{p}{)}
+\PY{n}{zipf\PYZus{}var\PYZus{}series} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+\PY{k}{for} \PY{n}{sample\PYZus{}size}\PY{p}{,} \PY{n}{samples} \PY{o+ow}{in} \PY{n}{zipf\PYZus{}samples}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{zipf\PYZus{}var\PYZus{}series}\PY{p}{[}\PY{n}{sample\PYZus{}size}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{n+nb}{sorted}\PY{p}{(}\PY{n}{sample}\PY{p}{)} \PY{k}{for} \PY{n}{sample} \PY{o+ow}{in} \PY{n}{samples}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{ux43fux440ux43eux432ux435ux440ux43aux430-ux433ux438ux43fux43eux442ux435ux437-ux43e-ux432ux438ux434ux435-ux440ux430ux441ux43fux440ux435ux434ux435ux43bux435ux43dux438ux44f}{%
+\subsection*{4.1 Проверка гипотез о виде
+распределения}\label{ux43fux440ux43eux432ux435ux440ux43aux430-ux433ux438ux43fux43eux442ux435ux437-ux43e-ux432ux438ux434ux435-ux440ux430ux441ux43fux440ux435ux434ux435ux43bux435ux43dux438ux44f}}
+
+\hypertarget{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux445ux438-ux43aux432ux430ux434ux440ux430ux442}{%
+\subsubsection*{Критерий согласия
+хи-квадрат}\label{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux445ux438-ux43aux432ux430ux434ux440ux430ux442}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{sample\PYZus{}size}\PY{p}{,} \PY{n}{var\PYZus{}series} \PY{o+ow}{in} \PY{n}{zipf\PYZus{}var\PYZus{}series}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Выборки объема }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sample\PYZus{}size}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{sample} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{ret} \PY{o}{=} \PY{n}{find\PYZus{}chi2}\PY{p}{(}\PY{n}{sample}\PY{p}{,} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{zipf\PYZus{}cdf}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{zipf\PYZus{}s}\PY{p}{,} \PY{n}{zipf\PYZus{}N}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{zipf\PYZus{}N}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{k}\PY{p}{,} \PY{n}{chi2} \PY{o}{=} \PY{n}{ret}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{ret}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{chi2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{k}{for} \PY{n}{alpha} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.05}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:20\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  д.у.з. }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{alpha} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ гипотеза }\PY{l+s+s2}{\PYZdq{}} \PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n}{from\PYZus{}table} \PY{o}{=} \PY{n}{chi2\PYZus{}quantiles}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{k} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}
+            \PY{k}{if} \PY{n}{from\PYZus{}table} \PY{o}{\PYZgt{}} \PY{n}{chi2}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{   принимается (}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{ \PYZgt{} }\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{from\PYZus{}table}\PY{p}{,} \PY{n}{chi2}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{не принимается (}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{ <=}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{from\PYZus{}table}\PY{p}{,} \PY{n}{chi2}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+{\fontsize{10.8}{11}
+    \begin{Verbatim}[commandchars=\\\{\}]
+Выборки объема 5
+1: д.у.з. 0.1 г. + (19.812 > 11.366), д.у.з. 0.05 г. + (22.362 > 11.366)
+2: д.у.з. 0.1 г. + (19.812 > 13.671), д.у.з. 0.05 г. + (22.362 > 13.671)
+3: д.у.з. 0.1 г. + (19.812 >  3.182), д.у.з. 0.05 г. + (22.362 >  3.182)
+4: д.у.з. 0.1 г. – (19.812 <=33.763), д.у.з. 0.05 г. – (22.362 <=33.763)
+5: д.у.з. 0.1 г. + (19.812 >  9.181), д.у.з. 0.05 г. + (22.362 >  9.181)
+Выборки объема 10
+1: д.у.з. 0.1 г. – (19.812 <=21.446), д.у.з. 0.05 г. + (22.362 > 21.446)
+2: д.у.з. 0.1 г. + (19.812 > 11.033), д.у.з. 0.05 г. + (22.362 > 11.033)
+3: д.у.з. 0.1 г. – (19.812 <=23.666), д.у.з. 0.05 г. – (22.362 <=23.666)
+4: д.у.з. 0.1 г. + (19.812 >  2.937), д.у.з. 0.05 г. + (22.362 >  2.937)
+5: д.у.з. 0.1 г. + (19.812 >  3.699), д.у.з. 0.05 г. + (22.362 >  3.699)
+Выборки объема 100
+1: д.у.з. 0.1 г. + (19.812 >  5.786), д.у.з. 0.05 г. + (22.362 >  5.786)
+2: д.у.з. 0.1 г. + (19.812 > 12.797), д.у.з. 0.05 г. + (22.362 > 12.797)
+3: д.у.з. 0.1 г. + (19.812 > 11.169), д.у.з. 0.05 г. + (22.362 > 11.169)
+4: д.у.з. 0.1 г. + (19.812 > 12.326), д.у.з. 0.05 г. + (22.362 > 12.326)
+5: д.у.з. 0.1 г. – (19.812 <=19.923), д.у.з. 0.05 г. + (22.362 > 19.923)
+Выборки объема 1000
+1: д.у.з. 0.1 г. + (19.812 > 15.714), д.у.з. 0.05 г. + (22.362 > 15.714)
+2: д.у.з. 0.1 г. + (19.812 > 19.256), д.у.з. 0.05 г. + (22.362 > 19.256)
+3: д.у.з. 0.1 г. + (19.812 > 13.202), д.у.з. 0.05 г. + (22.362 > 13.202)
+4: д.у.з. 0.1 г. + (19.812 > 13.799), д.у.з. 0.05 г. + (22.362 > 13.799)
+5: д.у.з. 0.1 г. + (19.812 >  3.770), д.у.з. 0.05 г. + (22.362 >  3.770)
+Выборки объема 100000
+1: д.у.з. 0.1 г. – (19.812 <=20.544), д.у.з. 0.05 г. + (22.362 > 20.544)
+2: д.у.з. 0.1 г. – (19.812 <=27.690), д.у.з. 0.05 г. – (22.362 <=27.690)
+3: д.у.з. 0.1 г. + (19.812 > 10.681), д.у.з. 0.05 г. + (22.362 > 10.681)
+4: д.у.з. 0.1 г. + (19.812 > 19.684), д.у.з. 0.05 г. + (22.362 > 19.684)
+5: д.у.з. 0.1 г. + (19.812 > 19.552), д.у.з. 0.05 г. + (22.362 > 19.552)
+\end{Verbatim}
+}
+
+    \hypertarget{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux445ux438-ux43aux432ux430ux434ux440ux430ux442-ux434ux43bux44f-ux441ux43bux43eux436ux43dux43eux439-ux433ux438ux43fux43eux442ux435ux437ux44b}{%
+\subsubsection*{Критерий согласия хи-квадрат для сложной
+гипотезы}\label{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux445ux438-ux43aux432ux430ux434ux440ux430ux442-ux434ux43bux44f-ux441ux43bux43eux436ux43dux43eux439-ux433ux438ux43fux43eux442ux435ux437ux44b}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} вклад выборки}
+\PY{k}{def} \PY{n+nf}{zipf\PYZus{}score}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{N}\PY{p}{,} \PY{n}{sample}\PY{p}{)}\PY{p}{:}
+    \PY{n}{ticks} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{N}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+    \PY{n}{powered} \PY{o}{=} \PY{n}{ticks}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{s}\PY{p}{)}
+    \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{powered} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{ticks}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{powered}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{sample}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{16}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{sample\PYZus{}size}\PY{p}{,} \PY{n}{var\PYZus{}series} \PY{o+ow}{in} \PY{n}{zipf\PYZus{}var\PYZus{}series}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Выборки объема }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sample\PYZus{}size}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{sample} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{s\PYZus{}est} \PY{o}{=} \PY{n}{optimize}\PY{o}{.}\PY{n}{bisect}\PY{p}{(}\PY{k}{lambda} \PY{n}{s}\PY{p}{:} \PY{n}{zipf\PYZus{}score}\PY{p}{(}\PY{n}{s}\PY{p}{,} \PY{n}{zipf\PYZus{}N}\PY{p}{,} \PY{n}{sample}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}
+        \PY{n}{ret} \PY{o}{=} \PY{n}{find\PYZus{}chi2}\PY{p}{(}\PY{n}{sample}\PY{p}{,} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{zipf\PYZus{}cdf}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{s\PYZus{}est}\PY{p}{,} \PY{n}{zipf\PYZus{}N}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{zipf\PYZus{}N}\PY{p}{,} \PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{k}\PY{p}{,} \PY{n}{chi2} \PY{o}{=} \PY{n}{ret}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{ret}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{chi2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{k}{for} \PY{n}{alpha} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.05}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:20\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  д.у.з. }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{alpha} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ гипотеза }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n}{from\PYZus{}table} \PY{o}{=} \PY{n}{chi2\PYZus{}quantiles}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{k} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}
+            \PY{k}{if} \PY{n}{from\PYZus{}table} \PY{o}{\PYZgt{}} \PY{n}{chi2}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{   принимается (}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{ \PYZgt{} }\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{from\PYZus{}table}\PY{p}{,} \PY{n}{chi2}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{не принимается (}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{ <=}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{from\PYZus{}table}\PY{p}{,} \PY{n}{chi2}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  ОМП: s = }\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{s\PYZus{}est}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+{\fontsize{8.8}{9}
+    \begin{Verbatim}[commandchars=\\\{\}]
+Выборки объема 5
+1: д.у.з. 0.1 г. + (19.812 >  9.897), д.у.з. 0.05 г. + (22.362 >  9.897), ОМП: s = 1.396
+2: д.у.з. 0.1 г. + (19.812 > 13.517), д.у.з. 0.05 г. + (22.362 > 13.517), ОМП: s = 1.774
+3: д.у.з. 0.1 г. + (19.812 >  4.379), д.у.з. 0.05 г. + (22.362 >  4.379), ОМП: s = 2.056
+4: д.у.з. 0.1 г. + (19.812 > 10.047), д.у.з. 0.05 г. + (22.362 > 10.047), ОМП: s = 0.562
+5: д.у.з. 0.1 г. + (19.812 >  9.929), д.у.з. 0.05 г. + (22.362 >  9.929), ОМП: s = 1.587
+Выборки объема 10
+1: д.у.з. 0.1 г. + (19.812 > 13.196), д.у.з. 0.05 г. + (22.362 > 13.196), ОМП: s = 1.198
+2: д.у.з. 0.1 г. + (19.812 > 13.892), д.у.з. 0.05 г. + (22.362 > 13.892), ОМП: s = 1.797
+3: д.у.з. 0.1 г. + (19.812 > 10.080), д.у.з. 0.05 г. + (22.362 > 10.080), ОМП: s = 0.768
+4: д.у.з. 0.1 г. + (19.812 >  1.636), д.у.з. 0.05 г. + (22.362 >  1.636), ОМП: s = 2.882
+5: д.у.з. 0.1 г. + (19.812 >  2.952), д.у.з. 0.05 г. + (22.362 >  2.952), ОМП: s = 2.316
+Выборки объема 100
+1: д.у.з. 0.1 г. + (19.812 >  6.287), д.у.з. 0.05 г. + (22.362 >  6.287), ОМП: s = 1.568
+2: д.у.з. 0.1 г. + (19.812 > 11.221), д.у.з. 0.05 г. + (22.362 > 11.221), ОМП: s = 1.419
+3: д.у.з. 0.1 г. + (19.812 >  8.264), д.у.з. 0.05 г. + (22.362 >  8.264), ОМП: s = 1.350
+4: д.у.з. 0.1 г. + (19.812 > 11.826), д.у.з. 0.05 г. + (22.362 > 11.826), ОМП: s = 1.439
+5: д.у.з. 0.1 г. – (19.812 <=23.130), д.у.з. 0.05 г. – (22.362 <=23.130), ОМП: s = 1.617
+Выборки объема 1000
+1: д.у.з. 0.1 г. + (19.812 > 13.768), д.у.з. 0.05 г. + (22.362 > 13.768), ОМП: s = 1.458
+2: д.у.з. 0.1 г. + (19.812 > 18.609), д.у.з. 0.05 г. + (22.362 > 18.609), ОМП: s = 1.487
+3: д.у.з. 0.1 г. + (19.812 > 12.804), д.у.з. 0.05 г. + (22.362 > 12.804), ОМП: s = 1.493
+4: д.у.з. 0.1 г. + (19.812 > 14.325), д.у.з. 0.05 г. + (22.362 > 14.325), ОМП: s = 1.527
+5: д.у.з. 0.1 г. + (19.812 >  3.779), д.у.з. 0.05 г. + (22.362 >  3.779), ОМП: s = 1.509
+Выборки объема 100000
+1: д.у.з. 0.1 г. – (19.812 <=19.814), д.у.з. 0.05 г. + (22.362 > 19.814), ОМП: s = 1.496
+2: д.у.з. 0.1 г. – (19.812 <=27.362), д.у.з. 0.05 г. – (22.362 <=27.362), ОМП: s = 1.502
+3: д.у.з. 0.1 г. + (19.812 > 10.696), д.у.з. 0.05 г. + (22.362 > 10.696), ОМП: s = 1.500
+4: д.у.з. 0.1 г. + (19.812 > 18.287), д.у.з. 0.05 г. + (22.362 > 18.287), ОМП: s = 1.492
+5: д.у.з. 0.1 г. + (19.812 > 19.522), д.у.з. 0.05 г. + (22.362 > 19.522), ОМП: s = 1.498
+\end{Verbatim}
+}
+
+\newpage
+\vspace{-0.5cm}
+    \hypertarget{ux431ux435ux442ux430-ux440ux430ux441ux43fux440ux435ux434ux435ux43bux435ux43dux438ux435-ux430ux431ux441ux43eux43bux44eux442ux43dux43e-ux43dux435ux43fux440ux435ux440ux44bux432ux43dux43eux435}{%
+\section*{Бета-распределение (абсолютно
+непрерывное)}\label{ux431ux435ux442ux430-ux440ux430ux441ux43fux440ux435ux434ux435ux43bux435ux43dux438ux435-ux430ux431ux441ux43eux43bux44eux442ux43dux43e-ux43dux435ux43fux440ux435ux440ux44bux432ux43dux43eux435}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{17}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} плотность вероятности}
+\PY{k}{def} \PY{n+nf}{beta\PYZus{}pdf}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{alpha}\PY{p}{,} \PY{n}{beta}\PY{p}{)}\PY{p}{:} \PY{k}{return} \PY{n}{stats}\PY{o}{.}\PY{n}{beta}\PY{o}{.}\PY{n}{pdf}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{alpha}\PY{p}{,} \PY{n}{beta}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} функция распределения}
+\PY{k}{def} \PY{n+nf}{beta\PYZus{}cdf}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{alpha}\PY{p}{,} \PY{n}{beta}\PY{p}{)}\PY{p}{:} \PY{k}{return} \PY{n}{special}\PY{o}{.}\PY{n}{betainc}\PY{p}{(}\PY{n}{alpha}\PY{p}{,} \PY{n}{beta}\PY{p}{,} \PY{n}{x}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{18}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{beta\PYZus{}random}\PY{p}{(}\PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+    \PY{n}{ret} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{n}{l} \PY{o}{=} \PY{n}{a}
+    \PY{n}{k} \PY{o}{=} \PY{n}{a} \PY{o}{+} \PY{n}{b} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+    \PY{k}{for} \PY{n}{\PYZus{}} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{size}\PY{p}{)}\PY{p}{:}
+        \PY{n}{uni\PYZus{}set} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{uniform}\PY{o}{.}\PY{n}{rvs}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{n}{k}\PY{p}{)}
+        \PY{n}{uni\PYZus{}set}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+        \PY{n}{ret}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{uni\PYZus{}set}\PY{p}{[}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+    \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{ret}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Выберем для моделирования параметры \(a=5\) и \(b=2\)
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{19}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{beta\PYZus{}a} \PY{o}{=} \PY{l+m+mi}{5}
+\PY{n}{beta\PYZus{}b} \PY{o}{=} \PY{l+m+mi}{2}
+\PY{n}{beta\PYZus{}samples} \PY{o}{=} \PY{n}{generate\PYZus{}samples}\PY{p}{(}\PY{n}{beta\PYZus{}random}\PY{p}{,} \PY{n}{a}\PY{o}{=}\PY{n}{beta\PYZus{}a}\PY{p}{,} \PY{n}{b}\PY{o}{=}\PY{n}{beta\PYZus{}b}\PY{p}{)}
+\PY{n}{beta\PYZus{}var\PYZus{}series} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+\PY{k}{for} \PY{n}{sample\PYZus{}size}\PY{p}{,} \PY{n}{samples} \PY{o+ow}{in} \PY{n}{beta\PYZus{}samples}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{beta\PYZus{}var\PYZus{}series}\PY{p}{[}\PY{n}{sample\PYZus{}size}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{n+nb}{sorted}\PY{p}{(}\PY{n}{sample}\PY{p}{)} \PY{k}{for} \PY{n}{sample} \PY{o+ow}{in} \PY{n}{samples}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+\vspace{-0.3cm}
+    \hypertarget{ux43fux440ux43eux432ux435ux440ux43aux430-ux433ux438ux43fux43eux442ux435ux437-ux43e-ux432ux438ux434ux435-ux440ux430ux441ux43fux440ux435ux434ux435ux43bux435ux43dux438ux44f}{%
+\subsection*{4.1 Проверка гипотез о виде
+распределения}\label{ux43fux440ux43eux432ux435ux440ux43aux430-ux433ux438ux43fux43eux442ux435ux437-ux43e-ux432ux438ux434ux435-ux440ux430ux441ux43fux440ux435ux434ux435ux43bux435ux43dux438ux44f}}
+
+    \hypertarget{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux445ux438-ux43aux432ux430ux434ux440ux430ux442}{%
+\subsubsection*{Критерий согласия
+хи-квадрат}\label{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux445ux438-ux43aux432ux430ux434ux440ux430ux442}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{20}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{sample\PYZus{}size}\PY{p}{,} \PY{n}{var\PYZus{}series} \PY{o+ow}{in} \PY{n}{beta\PYZus{}var\PYZus{}series}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Выборки объема }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sample\PYZus{}size}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{sample} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{ret} \PY{o}{=} \PY{n}{find\PYZus{}chi2}\PY{p}{(}\PY{n}{sample}\PY{p}{,} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{beta\PYZus{}cdf}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{beta\PYZus{}a}\PY{p}{,} \PY{n}{beta\PYZus{}b}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}
+        \PY{n}{k}\PY{p}{,} \PY{n}{chi2} \PY{o}{=} \PY{n}{ret}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{ret}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{chi2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{k}{for} \PY{n}{alpha} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.05}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:20\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  д.у.з. }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{alpha} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ гипотеза }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n}{from\PYZus{}table} \PY{o}{=} \PY{n}{chi2\PYZus{}quantiles}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{k} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}
+            \PY{k}{if} \PY{n}{from\PYZus{}table} \PY{o}{\PYZgt{}} \PY{n}{chi2}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{   принимается (}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{ \PYZgt{} }\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{from\PYZus{}table}\PY{p}{,} \PY{n}{chi2}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{не принимается (}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{ <=}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{from\PYZus{}table}\PY{p}{,} \PY{n}{chi2}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+{\fontsize{10.8}{11}
+    \begin{Verbatim}[commandchars=\\\{\}]
+Выборки объема 5
+1: д.у.з. 0.1 г. + ( 4.605 >  1.633), д.у.з. 0.05 г. + ( 5.991 >  1.633)
+2: д.у.з. 0.1 г. + ( 4.605 >  2.706), д.у.з. 0.05 г. + ( 5.991 >  2.706)
+3: д.у.з. 0.1 г. + ( 4.605 >  1.633), д.у.з. 0.05 г. + ( 5.991 >  1.633)
+4: д.у.з. 0.1 г. + ( 4.605 >  0.532), д.у.з. 0.05 г. + ( 5.991 >  0.532)
+5: д.у.з. 0.1 г. + ( 4.605 >  2.706), д.у.з. 0.05 г. + ( 5.991 >  2.706)
+Выборки объема 10
+1: д.у.з. 0.1 г. + ( 6.251 >  0.799), д.у.з. 0.05 г. + ( 7.815 >  0.799)
+2: д.у.з. 0.1 г. + ( 6.251 >  0.799), д.у.з. 0.05 г. + ( 7.815 >  0.799)
+3: д.у.з. 0.1 г. + ( 6.251 >  1.912), д.у.з. 0.05 г. + ( 7.815 >  1.912)
+4: д.у.з. 0.1 г. + ( 6.251 >  0.276), д.у.з. 0.05 г. + ( 7.815 >  0.276)
+5: д.у.з. 0.1 г. + ( 6.251 >  2.633), д.у.з. 0.05 г. + ( 7.815 >  2.633)
+Выборки объема 100
+1: д.у.з. 0.1 г. – (10.645 <=33.303), д.у.з. 0.05 г. – (12.592 <=33.303)
+2: д.у.з. 0.1 г. + (10.645 >  3.614), д.у.з. 0.05 г. + (12.592 >  3.614)
+3: д.у.з. 0.1 г. + (10.645 >  2.945), д.у.з. 0.05 г. + (12.592 >  2.945)
+4: д.у.з. 0.1 г. + (10.645 >  7.780), д.у.з. 0.05 г. + (12.592 >  7.780)
+5: д.у.з. 0.1 г. + (10.645 >  3.344), д.у.з. 0.05 г. + (12.592 >  3.344)
+Выборки объема 1000
+1: д.у.з. 0.1 г. + (14.684 >  7.806), д.у.з. 0.05 г. + (16.919 >  7.806)
+2: д.у.з. 0.1 г. + (14.684 >  3.937), д.у.з. 0.05 г. + (16.919 >  3.937)
+3: д.у.з. 0.1 г. + (14.684 >  6.159), д.у.з. 0.05 г. + (16.919 >  6.159)
+4: д.у.з. 0.1 г. + (14.684 >  4.398), д.у.з. 0.05 г. + (16.919 >  4.398)
+5: д.у.з. 0.1 г. + (14.684 >  2.647), д.у.з. 0.05 г. + (16.919 >  2.647)
+Выборки объема 100000
+1: д.у.з. 0.1 г. + (23.542 > 11.631), д.у.з. 0.05 г. + (26.296 > 11.631)
+2: д.у.з. 0.1 г. + (23.542 > 12.441), д.у.з. 0.05 г. + (26.296 > 12.441)
+3: д.у.з. 0.1 г. – (23.542 <=29.362), д.у.з. 0.05 г. – (26.296 <=29.362)
+4: д.у.з. 0.1 г. + (23.542 > 10.552), д.у.з. 0.05 г. + (26.296 > 10.552)
+5: д.у.з. 0.1 г. + (23.542 > 14.352), д.у.з. 0.05 г. + (26.296 > 14.352)
+\end{Verbatim}
+}
+
+\vspace{-0.7cm}
+    \hypertarget{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux445ux438-ux43aux432ux430ux434ux440ux430ux442-ux434ux43bux44f-ux441ux43bux43eux436ux43dux43eux439-ux433ux438ux43fux43eux442ux435ux437ux44b}{%
+\subsubsection*{Критерий согласия хи-квадрат для сложной
+гипотезы}\label{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux445ux438-ux43aux432ux430ux434ux440ux430ux442-ux434ux43bux44f-ux441ux43bux43eux436ux43dux43eux439-ux433ux438ux43fux43eux442ux435ux437ux44b}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{21}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} вклад выборки}
+\PY{k}{def} \PY{n+nf}{beta\PYZus{}score}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n}{sample}\PY{p}{)}\PY{p}{:}
+    \PY{n}{sample} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{sample}\PY{p}{)}
+    \PY{n}{a}\PY{p}{,} \PY{n}{b} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+    \PY{n}{n} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{sample}\PY{p}{)}
+    \PY{n}{first} \PY{o}{=} \PY{n}{n} \PY{o}{*} \PY{p}{(}\PY{n}{special}\PY{o}{.}\PY{n}{psi}\PY{p}{(}\PY{n}{a}\PY{o}{+}\PY{n}{b}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{special}\PY{o}{.}\PY{n}{psi}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{sample}\PY{p}{)}\PY{p}{)}
+    \PY{n}{second} \PY{o}{=} \PY{n}{n} \PY{o}{*} \PY{p}{(}\PY{n}{special}\PY{o}{.}\PY{n}{psi}\PY{p}{(}\PY{n}{a}\PY{o}{+}\PY{n}{b}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{special}\PY{o}{.}\PY{n}{psi}\PY{p}{(}\PY{n}{b}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{sample}\PY{p}{)}\PY{p}{)}
+    \PY{k}{return} \PY{p}{(}\PY{n}{first}\PY{p}{,} \PY{n}{second}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} явно посчитанные частные производные 1 и 2 порядка}
+\PY{c+c1}{\PYZsh{} (для более хорошей работы метода Ньютона)}
+\PY{k}{def} \PY{n+nf}{beta\PYZus{}score\PYZus{}fprime}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{:}
+    \PY{n}{a}\PY{p}{,} \PY{n}{b} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+    \PY{n}{first} \PY{o}{=} \PY{n}{n} \PY{o}{*} \PY{p}{(}\PY{n}{special}\PY{o}{.}\PY{n}{polygamma}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{a}\PY{o}{+}\PY{n}{b}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{special}\PY{o}{.}\PY{n}{polygamma}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{a}\PY{p}{)}\PY{p}{)}
+    \PY{n}{second} \PY{o}{=} \PY{n}{n} \PY{o}{*} \PY{p}{(}\PY{n}{special}\PY{o}{.}\PY{n}{polygamma}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{a}\PY{o}{+}\PY{n}{b}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{special}\PY{o}{.}\PY{n}{polygamma}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{)}
+    \PY{k}{return} \PY{p}{(}\PY{n}{first}\PY{p}{,} \PY{n}{second}\PY{p}{)}
+
+\PY{k}{def} \PY{n+nf}{beta\PYZus{}score\PYZus{}fprime2}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{:}
+    \PY{n}{a}\PY{p}{,} \PY{n}{b} \PY{o}{=} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{params}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+    \PY{n}{first} \PY{o}{=} \PY{n}{n} \PY{o}{*} \PY{p}{(}\PY{n}{special}\PY{o}{.}\PY{n}{polygamma}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{a}\PY{o}{+}\PY{n}{b}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{special}\PY{o}{.}\PY{n}{polygamma}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{a}\PY{p}{)}\PY{p}{)}
+    \PY{n}{second} \PY{o}{=} \PY{n}{n} \PY{o}{*} \PY{p}{(}\PY{n}{special}\PY{o}{.}\PY{n}{polygamma}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{a}\PY{o}{+}\PY{n}{b}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{special}\PY{o}{.}\PY{n}{polygamma}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{)}
+    \PY{k}{return} \PY{p}{(}\PY{n}{first}\PY{p}{,} \PY{n}{second}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{22}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{sample\PYZus{}size}\PY{p}{,} \PY{n}{var\PYZus{}series} \PY{o+ow}{in} \PY{n}{beta\PYZus{}var\PYZus{}series}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Выборки объема }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sample\PYZus{}size}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{sample} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{params\PYZus{}est} \PY{o}{=} \PY{n}{optimize}\PY{o}{.}\PY{n}{newton}\PY{p}{(}\PY{k}{lambda} \PY{n}{params}\PY{p}{:} \PY{n}{beta\PYZus{}score}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n}{sample}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mf}{4.9}\PY{p}{,} \PY{l+m+mf}{2.1}\PY{p}{)}\PY{p}{,} \PY{n}{fprime}\PY{o}{=}\PY{k}{lambda} \PY{n}{params}\PY{p}{:} \PY{n}{beta\PYZus{}score\PYZus{}fprime}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{sample}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                                     \PY{n}{fprime2}\PY{o}{=}\PY{k}{lambda} \PY{n}{params}\PY{p}{:} \PY{n}{beta\PYZus{}score\PYZus{}fprime2}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{sample}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{maxiter}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{)}
+        \PY{n}{ret} \PY{o}{=} \PY{n}{find\PYZus{}chi2}\PY{p}{(}\PY{n}{sample}\PY{p}{,} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{beta\PYZus{}cdf}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{params\PYZus{}est}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{params\PYZus{}est}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{k+kc}{False}\PY{p}{)}
+        \PY{n}{k}\PY{p}{,} \PY{n}{chi2} \PY{o}{=} \PY{n}{ret}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{ret}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{chi2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{k}{for} \PY{n}{alpha} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.05}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:20\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  д.у.з. }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{alpha} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ гипотеза }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{if} \PY{n}{from\PYZus{}table} \PY{o}{\PYZgt{}} \PY{n}{chi2}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{   принимается (}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{ \PYZgt{} }\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{from\PYZus{}table}\PY{p}{,} \PY{n}{chi2}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{не принимается (}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{ <=}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{from\PYZus{}table}\PY{p}{,} \PY{n}{chi2}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  ОМП: a = }\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{, b = }\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{o}{*}\PY{n}{params\PYZus{}est}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+{\fontsize{7.8}{8}
+    \begin{Verbatim}[commandchars=\\\{\}]
+Выборки объема 5
+1: д.у.з. 0.1 г. + (26.296 >  0.564), д.у.з. 0.05 г. + (26.296 >  0.564), ОМП: a = 5.055,  b = 2.577
+2: д.у.з. 0.1 г. + (26.296 >  0.163), д.у.з. 0.05 г. + (26.296 >  0.163), ОМП: a = 16.154, b = 3.011
+3: д.у.з. 0.1 г. + (26.296 >  0.192), д.у.з. 0.05 г. + (26.296 >  0.192), ОМП: a = 7.301,  b = 4.788
+4: д.у.з. 0.1 г. + (26.296 >  0.006), д.у.з. 0.05 г. + (26.296 >  0.006), ОМП: a = 15.514, b = 5.465
+5: д.у.з. 0.1 г. + (26.296 >  0.147), д.у.з. 0.05 г. + (26.296 >  0.147), ОМП: a = 13.067, b = 2.052
+Выборки объема 10
+1: д.у.з. 0.1 г. + (26.296 >  1.155), д.у.з. 0.05 г. + (26.296 >  1.155), ОМП: a = 7.479,  b = 2.805
+2: д.у.з. 0.1 г. + (26.296 >  1.105), д.у.з. 0.05 г. + (26.296 >  1.105), ОМП: a = 5.566,  b = 1.401
+3: д.у.з. 0.1 г. + (26.296 >  2.098), д.у.з. 0.05 г. + (26.296 >  2.098), ОМП: a = 4.619,  b = 1.881
+4: д.у.з. 0.1 г. + (26.296 >  0.306), д.у.з. 0.05 г. + (26.296 >  0.306), ОМП: a = 4.741,  b = 1.924
+5: д.у.з. 0.1 г. + (26.296 >  0.301), д.у.з. 0.05 г. + (26.296 >  0.301), ОМП: a = 9.684,  b = 2.769
+Выборки объема 100
+1: д.у.з. 0.1 г. + (26.296 >  9.692), д.у.з. 0.05 г. + (26.296 >  9.692), ОМП: a = 4.485,  b = 2.178
+2: д.у.з. 0.1 г. + (26.296 >  2.434), д.у.з. 0.05 г. + (26.296 >  2.434), ОМП: a = 5.914,  b = 2.479
+3: д.у.з. 0.1 г. + (26.296 >  2.164), д.у.з. 0.05 г. + (26.296 >  2.164), ОМП: a = 5.607,  b = 2.250
+4: д.у.з. 0.1 г. + (26.296 >  7.078), д.у.з. 0.05 г. + (26.296 >  7.078), ОМП: a = 5.601,  b = 1.865
+5: д.у.з. 0.1 г. + (26.296 >  3.567), д.у.з. 0.05 г. + (26.296 >  3.567), ОМП: a = 4.349,  b = 1.631
+Выборки объема 1000
+1: д.у.з. 0.1 г. + (26.296 >  8.366), д.у.з. 0.05 г. + (26.296 >  8.366), ОМП: a = 4.971,  b = 1.975
+2: д.у.з. 0.1 г. + (26.296 >  3.905), д.у.з. 0.05 г. + (26.296 >  3.905), ОМП: a = 4.903,  b = 1.964
+3: д.у.з. 0.1 г. + (26.296 >  2.845), д.у.з. 0.05 г. + (26.296 >  2.845), ОМП: a = 5.162,  b = 2.139
+4: д.у.з. 0.1 г. + (26.296 >  2.841), д.у.з. 0.05 г. + (26.296 >  2.841), ОМП: a = 5.243,  b = 2.084
+5: д.у.з. 0.1 г. + (26.296 >  2.722), д.у.з. 0.05 г. + (26.296 >  2.722), ОМП: a = 5.103,  b = 2.049
+Выборки объема 100000
+1: д.у.з. 0.1 г. + (26.296 > 11.827), д.у.з. 0.05 г. + (26.296 > 11.827), ОМП: a = 5.005,  b = 2.002
+2: д.у.з. 0.1 г. + (26.296 > 10.886), д.у.з. 0.05 г. + (26.296 > 10.886), ОМП: a = 5.017,  b = 2.007
+3: д.у.з. 0.1 г. – (26.296 <=28.626), д.у.з. 0.05 г. – (26.296 <=28.626), ОМП: a = 5.019,  b = 2.004
+4: д.у.з. 0.1 г. + (26.296 >  9.628), д.у.з. 0.05 г. + (26.296 >  9.628), ОМП: a = 5.003,  b = 1.998
+5: д.у.з. 0.1 г. + (26.296 > 14.273), д.у.з. 0.05 г. + (26.296 > 14.273), ОМП: a = 4.981,  b = 1.994
+\end{Verbatim}
+}
+    \hypertarget{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux43aux43eux43bux43cux43eux433ux43eux440ux43eux432ux430-ux441ux43cux438ux440ux43dux43eux432ux430}{%
+\subsubsection*{Критерий согласия
+Колмогорова-Смирнова}\label{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux43aux43eux43bux43cux43eux433ux43eux440ux43eux432ux430-ux441ux43cux438ux440ux43dux43eux432ux430}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{23}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{sample\PYZus{}size}\PY{p}{,} \PY{n}{var\PYZus{}series} \PY{o+ow}{in} \PY{n}{beta\PYZus{}var\PYZus{}series}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{sqrt\PYZus{}n} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{sample\PYZus{}size}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Выборки объема }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sample\PYZus{}size}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{sample} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{dn} \PY{o}{=} \PY{n}{find\PYZus{}dn}\PY{p}{(}\PY{n}{sample}\PY{p}{,} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{beta\PYZus{}cdf}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{beta\PYZus{}a}\PY{p}{,} \PY{n}{beta\PYZus{}b}\PY{p}{)}\PY{p}{)}
+        \PY{k}{for} \PY{n}{alpha} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.05}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:20\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  д.у.з. }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{alpha} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ гипотеза }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n}{from\PYZus{}table} \PY{o}{=} \PY{n}{chi2\PYZus{}quantiles}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{k} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}
+            \PY{k}{if} \PY{n}{dn} \PY{o}{*} \PY{n}{sqrt\PYZus{}n} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{lambdas}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{   принимается (}\PY{l+s+si}{\PYZob{}:5.3f\PYZcb{}}\PY{l+s+s2}{ <=}\PY{l+s+si}{\PYZob{}:5.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{dn} \PY{o}{*} \PY{n}{sqrt\PYZus{}n}\PY{p}{,} \PY{n}{lambdas}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{не принимается (}\PY{l+s+si}{\PYZob{}:5.3f\PYZcb{}}\PY{l+s+s2}{ \PYZgt{} }\PY{l+s+si}{\PYZob{}:5.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{dn} \PY{o}{*} \PY{n}{sqrt\PYZus{}n}\PY{p}{,} \PY{n}{lambdas}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+{\fontsize{11.5}{11}
+    \begin{Verbatim}[commandchars=\\\{\}]
+Выборки объема 5
+1: д.у.з. 0.1 г. + (0.739 <=1.220), д.у.з. 0.05 г. + (0.739 <=1.360)
+2: д.у.з. 0.1 г. + (1.090 <=1.220), д.у.з. 0.05 г. + (1.090 <=1.360)
+3: д.у.з. 0.1 г. + (0.915 <=1.220), д.у.з. 0.05 г. + (0.915 <=1.360)
+4: д.у.з. 0.1 г. + (0.538 <=1.220), д.у.з. 0.05 г. + (0.538 <=1.360)
+5: д.у.з. 0.1 г. – (1.278 > 1.220), д.у.з. 0.05 г. + (1.278 <=1.360)
+Выборки объема 10
+1: д.у.з. 0.1 г. + (0.548 <=1.220), д.у.з. 0.05 г. + (0.548 <=1.360)
+2: д.у.з. 0.1 г. – (1.243 > 1.220), д.у.з. 0.05 г. + (1.243 <=1.360)
+3: д.у.з. 0.1 г. + (0.638 <=1.220), д.у.з. 0.05 г. + (0.638 <=1.360)
+4: д.у.з. 0.1 г. + (0.596 <=1.220), д.у.з. 0.05 г. + (0.596 <=1.360)
+5: д.у.з. 0.1 г. + (0.933 <=1.220), д.у.з. 0.05 г. + (0.933 <=1.360)
+Выборки объема 100
+1: д.у.з. 0.1 г. – (1.255 > 1.220), д.у.з. 0.05 г. + (1.255 <=1.360)
+2: д.у.з. 0.1 г. + (0.723 <=1.220), д.у.з. 0.05 г. + (0.723 <=1.360)
+3: д.у.з. 0.1 г. + (0.739 <=1.220), д.у.з. 0.05 г. + (0.739 <=1.360)
+4: д.у.з. 0.1 г. – (1.430 > 1.220), д.у.з. 0.05 г. – (1.430 > 1.360)
+5: д.у.з. 0.1 г. + (0.469 <=1.220), д.у.з. 0.05 г. + (0.469 <=1.360)
+Выборки объема 1000
+1: д.у.з. 0.1 г. + (0.654 <=1.220), д.у.з. 0.05 г. + (0.654 <=1.360)
+2: д.у.з. 0.1 г. + (0.682 <=1.220), д.у.з. 0.05 г. + (0.682 <=1.360)
+3: д.у.з. 0.1 г. + (0.992 <=1.220), д.у.з. 0.05 г. + (0.992 <=1.360)
+4: д.у.з. 0.1 г. + (0.558 <=1.220), д.у.з. 0.05 г. + (0.558 <=1.360)
+5: д.у.з. 0.1 г. + (0.709 <=1.220), д.у.з. 0.05 г. + (0.709 <=1.360)
+Выборки объема 100000
+1: д.у.з. 0.1 г. + (0.717 <=1.220), д.у.з. 0.05 г. + (0.717 <=1.360)
+2: д.у.з. 0.1 г. + (0.713 <=1.220), д.у.з. 0.05 г. + (0.713 <=1.360)
+3: д.у.з. 0.1 г. + (0.932 <=1.220), д.у.з. 0.05 г. + (0.932 <=1.360)
+4: д.у.з. 0.1 г. + (0.752 <=1.220), д.у.з. 0.05 г. + (0.752 <=1.360)
+5: д.у.з. 0.1 г. + (0.753 <=1.220), д.у.з. 0.05 г. + (0.753 <=1.360)
+\end{Verbatim}
+}
+
+    \hypertarget{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux43aux43eux43bux43cux43eux433ux43eux440ux43eux432ux430-ux441ux43cux438ux440ux43dux43eux432ux430-ux434ux43bux44f-ux441ux43bux43eux436ux43dux43eux439-ux433ux438ux43fux43eux442ux435ux437ux44b}{%
+\subsubsection*{Критерий согласия Колмогорова-Смирнова для сложной
+гипотезы}\label{ux43aux440ux438ux442ux435ux440ux438ux439-ux441ux43eux433ux43bux430ux441ux438ux44f-ux43aux43eux43bux43cux43eux433ux43eux440ux43eux432ux430-ux441ux43cux438ux440ux43dux43eux432ux430-ux434ux43bux44f-ux441ux43bux43eux436ux43dux43eux439-ux433ux438ux43fux43eux442ux435ux437ux44b}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{24}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{sample\PYZus{}size}\PY{p}{,} \PY{n}{var\PYZus{}series} \PY{o+ow}{in} \PY{n}{beta\PYZus{}var\PYZus{}series}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{sqrt\PYZus{}n} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{sample\PYZus{}size}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Выборки объема }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sample\PYZus{}size}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{sample} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{params\PYZus{}est} \PY{o}{=} \PY{n}{optimize}\PY{o}{.}\PY{n}{newton}\PY{p}{(}\PY{k}{lambda} \PY{n}{params}\PY{p}{:} \PY{n}{beta\PYZus{}score}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n}{sample}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mf}{4.9}\PY{p}{,} \PY{l+m+mf}{2.1}\PY{p}{)}\PY{p}{,} \PY{n}{fprime}\PY{o}{=}\PY{k}{lambda} \PY{n}{params}\PY{p}{:} \PY{n}{beta\PYZus{}score\PYZus{}fprime}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{sample}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                                     \PY{n}{fprime2}\PY{o}{=}\PY{k}{lambda} \PY{n}{params}\PY{p}{:} \PY{n}{beta\PYZus{}score\PYZus{}fprime2}\PY{p}{(}\PY{n}{params}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{sample}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{maxiter}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{)}
+        \PY{n}{dn} \PY{o}{=} \PY{n}{find\PYZus{}dn}\PY{p}{(}\PY{n}{sample}\PY{p}{,} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{beta\PYZus{}cdf}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{params\PYZus{}est}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{params\PYZus{}est}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+        \PY{k}{for} \PY{n}{alpha} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.05}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:20\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  д.у.з. }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{alpha} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ гипотеза }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{if} \PY{n}{dn} \PY{o}{*} \PY{n}{sqrt\PYZus{}n} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{lambdas}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{   принимается (}\PY{l+s+si}{\PYZob{}:5.3f\PYZcb{}}\PY{l+s+s2}{ <=}\PY{l+s+si}{\PYZob{}:5.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{dn} \PY{o}{*} \PY{n}{sqrt\PYZus{}n}\PY{p}{,} \PY{n}{lambdas}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{не принимается (}\PY{l+s+si}{\PYZob{}:5.3f\PYZcb{}}\PY{l+s+s2}{ \PYZgt{} }\PY{l+s+si}{\PYZob{}:5.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{dn} \PY{o}{*} \PY{n}{sqrt\PYZus{}n}\PY{p}{,} \PY{n}{lambdas}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+{\fontsize{11.5}{11}
+    \begin{Verbatim}[commandchars=\\\{\}]
+Выборки объема 5
+1: д.у.з. 0.1 г. + (0.569 <=1.220), д.у.з. 0.05 г. + (0.569 <=1.360)
+2: д.у.з. 0.1 г. + (0.522 <=1.220), д.у.з. 0.05 г. + (0.522 <=1.360)
+3: д.у.з. 0.1 г. + (0.525 <=1.220), д.у.з. 0.05 г. + (0.525 <=1.360)
+4: д.у.з. 0.1 г. + (0.337 <=1.220), д.у.з. 0.05 г. + (0.337 <=1.360)
+5: д.у.з. 0.1 г. + (0.723 <=1.220), д.у.з. 0.05 г. + (0.723 <=1.360)
+Выборки объема 10
+1: д.у.з. 0.1 г. + (0.468 <=1.220), д.у.з. 0.05 г. + (0.468 <=1.360)
+2: д.у.з. 0.1 г. + (0.578 <=1.220), д.у.з. 0.05 г. + (0.578 <=1.360)
+3: д.у.з. 0.1 г. + (0.601 <=1.220), д.у.з. 0.05 г. + (0.601 <=1.360)
+4: д.у.з. 0.1 г. + (0.620 <=1.220), д.у.з. 0.05 г. + (0.620 <=1.360)
+5: д.у.з. 0.1 г. + (0.466 <=1.220), д.у.з. 0.05 г. + (0.466 <=1.360)
+Выборки объема 100
+1: д.у.з. 0.1 г. + (0.616 <=1.220), д.у.з. 0.05 г. + (0.616 <=1.360)
+2: д.у.з. 0.1 г. + (0.617 <=1.220), д.у.з. 0.05 г. + (0.617 <=1.360)
+3: д.у.з. 0.1 г. + (0.652 <=1.220), д.у.з. 0.05 г. + (0.652 <=1.360)
+4: д.у.з. 0.1 г. – (1.253 > 1.220), д.у.з. 0.05 г. + (1.253 <=1.360)
+5: д.у.з. 0.1 г. + (0.811 <=1.220), д.у.з. 0.05 г. + (0.811 <=1.360)
+Выборки объема 1000
+1: д.у.з. 0.1 г. + (0.718 <=1.220), д.у.з. 0.05 г. + (0.718 <=1.360)
+2: д.у.з. 0.1 г. + (0.663 <=1.220), д.у.з. 0.05 г. + (0.663 <=1.360)
+3: д.у.з. 0.1 г. + (0.514 <=1.220), д.у.з. 0.05 г. + (0.514 <=1.360)
+4: д.у.з. 0.1 г. + (0.359 <=1.220), д.у.з. 0.05 г. + (0.359 <=1.360)
+5: д.у.з. 0.1 г. + (0.680 <=1.220), д.у.з. 0.05 г. + (0.680 <=1.360)
+Выборки объема 100000
+1: д.у.з. 0.1 г. + (0.735 <=1.220), д.у.з. 0.05 г. + (0.735 <=1.360)
+2: д.у.з. 0.1 г. + (0.533 <=1.220), д.у.з. 0.05 г. + (0.533 <=1.360)
+3: д.у.з. 0.1 г. + (0.662 <=1.220), д.у.з. 0.05 г. + (0.662 <=1.360)
+4: д.у.з. 0.1 г. + (0.469 <=1.220), д.у.з. 0.05 г. + (0.469 <=1.360)
+5: д.у.з. 0.1 г. + (0.684 <=1.220), д.у.з. 0.05 г. + (0.684 <=1.360)
+\end{Verbatim}
+}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{25}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{lambda\PYZus{}smirnov}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{m}\PY{p}{,} \PY{n}{max\PYZus{}diff}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{n} \PY{o}{*} \PY{n}{m} \PY{o}{/} \PY{p}{(}\PY{n}{n} \PY{o}{+} \PY{n}{m}\PY{p}{)}\PY{p}{)} \PY{o}{*} \PY{n}{max\PYZus{}diff}
+\PY{k}{for} \PY{n}{size\PYZus{}i}\PY{p}{,} \PY{n}{size} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{sample\PYZus{}count}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{beta\PYZus{}var\PYZus{}series}\PY{p}{[}\PY{n}{size}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{beta\PYZus{}var\PYZus{}series}\PY{p}{[}\PY{n}{size}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n}{sm\PYZus{}stat} \PY{o}{=} \PY{n}{lambda\PYZus{}smirnov}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{size}\PY{p}{,} \PY{n}{find\PYZus{}max\PYZus{}diff}\PY{p}{(}\PY{n}{beta\PYZus{}var\PYZus{}series}\PY{p}{[}\PY{n}{size}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{beta\PYZus{}var\PYZus{}series}\PY{p}{[}\PY{n}{size}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Выборки размером }\PY{l+s+si}{\PYZob{}:6\PYZcb{}}\PY{l+s+s2}{ и }\PY{l+s+si}{\PYZob{}:6\PYZcb{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{size}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{for} \PY{n}{alpha} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.05}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  д.у.з. }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{alpha} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ гипотеза }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{k}{if} \PY{n}{sm\PYZus{}stat} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{lambdas}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{:}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{   принимается (}\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{ <=}\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sm\PYZus{}stat}\PY{p}{,} \PY{n}{lambdas}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{k}{else}\PY{p}{:}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{не принимается (}\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{ \PYZgt{} }\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sm\PYZus{}stat}\PY{p}{,} \PY{n}{lambdas}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{k}{for} \PY{n}{size\PYZus{}j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{size\PYZus{}i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{sample\PYZus{}count}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n}{size2} \PY{o}{=} \PY{n}{sample\PYZus{}count}\PY{p}{[}\PY{n}{size\PYZus{}j}\PY{p}{]}
+            \PY{k}{for} \PY{n}{sample} \PY{o+ow}{in} \PY{n}{beta\PYZus{}var\PYZus{}series}\PY{p}{[}\PY{n}{size2}\PY{p}{]}\PY{p}{:}
+                \PY{n}{sm\PYZus{}stat} \PY{o}{=} \PY{n}{lambda\PYZus{}smirnov}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{size2}\PY{p}{,} \PY{n}{find\PYZus{}max\PYZus{}diff}\PY{p}{(}\PY{n}{beta\PYZus{}var\PYZus{}series}\PY{p}{[}\PY{n}{size}\PY{p}{]}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{sample}\PY{p}{)}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Выборки размером }\PY{l+s+si}{\PYZob{}:6\PYZcb{}}\PY{l+s+s2}{ и }\PY{l+s+si}{\PYZob{}:6\PYZcb{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{size2}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{k}{for} \PY{n}{alpha} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.05}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{:}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  д.у.з. }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{alpha} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ гипотеза }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                    \PY{k}{if} \PY{n}{sm\PYZus{}stat} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{lambdas}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{:}
+                        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{   принимается (}\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{ <=}\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sm\PYZus{}stat}\PY{p}{,} \PY{n}{lambdas}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                    \PY{k}{else}\PY{p}{:}
+                        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{не принимается (}\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{ \PYZgt{} }\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{)}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sm\PYZus{}stat}\PY{p}{,} \PY{n}{lambdas}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+{\fontsize{8.85}{9}
+    \begin{Verbatim}[commandchars=\\\{\}]
+В. р.      5 и      5: д.у.з. 0.1 г. + (0.949 <=1.220), д.у.з. 0.05 г. + (0.949 <=1.360)
+В. р.      5 и      5: д.у.з. 0.1 г. + (0.632 <=1.220), д.у.з. 0.05 г. + (0.632 <=1.360)
+В. р.      5 и      5: д.у.з. 0.1 г. + (0.632 <=1.220), д.у.з. 0.05 г. + (0.632 <=1.360)
+В. р.      5 и      5: д.у.з. 0.1 г. + (0.949 <=1.220), д.у.з. 0.05 г. + (0.949 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.730 <=1.220), д.у.з. 0.05 г. + (0.730 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (1.095 <=1.220), д.у.з. 0.05 г. + (1.095 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.548 <=1.220), д.у.з. 0.05 г. + (0.548 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.730 <=1.220), д.у.з. 0.05 г. + (0.730 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.913 <=1.220), д.у.з. 0.05 г. + (0.913 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.546 <=1.220), д.у.з. 0.05 г. + (0.546 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.676 <=1.220), д.у.з. 0.05 г. + (0.676 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.676 <=1.220), д.у.з. 0.05 г. + (0.676 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (1.004 <=1.220), д.у.з. 0.05 г. + (1.004 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.764 <=1.220), д.у.з. 0.05 г. + (0.764 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.734 <=1.220), д.у.з. 0.05 г. + (0.734 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.745 <=1.220), д.у.з. 0.05 г. + (0.745 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.705 <=1.220), д.у.з. 0.05 г. + (0.705 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.754 <=1.220), д.у.з. 0.05 г. + (0.754 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.734 <=1.220), д.у.з. 0.05 г. + (0.734 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.744 <=1.220), д.у.з. 0.05 г. + (0.744 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.737 <=1.220), д.у.з. 0.05 г. + (0.737 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.742 <=1.220), д.у.з. 0.05 г. + (0.742 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.741 <=1.220), д.у.з. 0.05 г. + (0.741 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.738 <=1.220), д.у.з. 0.05 г. + (0.738 <=1.360)
+В. р.      5 и      5: д.у.з. 0.1 г. - (1.265 > 1.220), д.у.з. 0.05 г. + (1.265 <=1.360)
+В. р.      5 и      5: д.у.з. 0.1 г. + (0.949 <=1.220), д.у.з. 0.05 г. + (0.949 <=1.360)
+В. р.      5 и      5: д.у.з. 0.1 г. + (0.632 <=1.220), д.у.з. 0.05 г. + (0.632 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.913 <=1.220), д.у.з. 0.05 г. + (0.913 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.365 <=1.220), д.у.з. 0.05 г. + (0.365 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.913 <=1.220), д.у.з. 0.05 г. + (0.913 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.913 <=1.220), д.у.з. 0.05 г. + (0.913 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.730 <=1.220), д.у.з. 0.05 г. + (0.730 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. - (1.266 > 1.220), д.у.з. 0.05 г. + (1.266 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (1.178 <=1.220), д.у.з. 0.05 г. + (1.178 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (1.113 <=1.220), д.у.з. 0.05 г. + (1.113 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (1.047 <=1.220), д.у.з. 0.05 г. + (1.047 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.982 <=1.220), д.у.з. 0.05 г. + (0.982 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (1.117 <=1.220), д.у.з. 0.05 г. + (1.117 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (1.077 <=1.220), д.у.з. 0.05 г. + (1.077 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (1.131 <=1.220), д.у.з. 0.05 г. + (1.131 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (1.097 <=1.220), д.у.з. 0.05 г. + (1.097 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (1.104 <=1.220), д.у.з. 0.05 г. + (1.104 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (1.088 <=1.220), д.у.з. 0.05 г. + (1.088 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (1.093 <=1.220), д.у.з. 0.05 г. + (1.093 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (1.092 <=1.220), д.у.з. 0.05 г. + (1.092 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (1.087 <=1.220), д.у.з. 0.05 г. + (1.087 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (1.090 <=1.220), д.у.з. 0.05 г. + (1.090 <=1.360)
+В. р.      5 и      5: д.у.з. 0.1 г. + (0.949 <=1.220), д.у.з. 0.05 г. + (0.949 <=1.360)
+В. р.      5 и      5: д.у.з. 0.1 г. - (1.265 > 1.220), д.у.з. 0.05 г. + (1.265 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.913 <=1.220), д.у.з. 0.05 г. + (0.913 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (1.095 <=1.220), д.у.з. 0.05 г. + (1.095 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.730 <=1.220), д.у.з. 0.05 г. + (0.730 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.730 <=1.220), д.у.з. 0.05 г. + (0.730 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. - (1.278 > 1.220), д.у.з. 0.05 г. + (1.278 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.698 <=1.220), д.у.з. 0.05 г. + (0.698 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.873 <=1.220), д.у.з. 0.05 г. + (0.873 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.851 <=1.220), д.у.з. 0.05 г. + (0.851 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (1.004 <=1.220), д.у.з. 0.05 г. + (1.004 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.917 <=1.220), д.у.з. 0.05 г. + (0.917 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.899 <=1.220), д.у.з. 0.05 г. + (0.899 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.921 <=1.220), д.у.з. 0.05 г. + (0.921 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.881 <=1.220), д.у.з. 0.05 г. + (0.881 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.892 <=1.220), д.у.з. 0.05 г. + (0.892 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.915 <=1.220), д.у.з. 0.05 г. + (0.915 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.914 <=1.220), д.у.з. 0.05 г. + (0.914 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.912 <=1.220), д.у.з. 0.05 г. + (0.912 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.915 <=1.220), д.у.з. 0.05 г. + (0.915 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.919 <=1.220), д.у.з. 0.05 г. + (0.919 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.913 <=1.220), д.у.з. 0.05 г. + (0.913 <=1.360)
+В. р.      5 и      5: д.у.з. 0.1 г. + (0.949 <=1.220), д.у.з. 0.05 г. + (0.949 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.365 <=1.220), д.у.з. 0.05 г. + (0.365 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.730 <=1.220), д.у.з. 0.05 г. + (0.730 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.548 <=1.220), д.у.з. 0.05 г. + (0.548 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.365 <=1.220), д.у.з. 0.05 г. + (0.365 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.730 <=1.220), д.у.з. 0.05 г. + (0.730 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.633 <=1.220), д.у.з. 0.05 г. + (0.633 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.524 <=1.220), д.у.з. 0.05 г. + (0.524 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.546 <=1.220), д.у.з. 0.05 г. + (0.546 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.436 <=1.220), д.у.з. 0.05 г. + (0.436 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (0.524 <=1.220), д.у.з. 0.05 г. + (0.524 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.504 <=1.220), д.у.з. 0.05 г. + (0.504 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.520 <=1.220), д.у.з. 0.05 г. + (0.520 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.575 <=1.220), д.у.з. 0.05 г. + (0.575 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.544 <=1.220), д.у.з. 0.05 г. + (0.544 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. + (0.560 <=1.220), д.у.з. 0.05 г. + (0.560 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.538 <=1.220), д.у.з. 0.05 г. + (0.538 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.538 <=1.220), д.у.з. 0.05 г. + (0.538 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.533 <=1.220), д.у.з. 0.05 г. + (0.533 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.533 <=1.220), д.у.з. 0.05 г. + (0.533 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. + (0.542 <=1.220), д.у.з. 0.05 г. + (0.542 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (1.095 <=1.220), д.у.з. 0.05 г. + (1.095 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.365 <=1.220), д.у.з. 0.05 г. + (0.365 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (1.095 <=1.220), д.у.з. 0.05 г. + (1.095 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (1.095 <=1.220), д.у.з. 0.05 г. + (1.095 <=1.360)
+В. р.      5 и     10: д.у.з. 0.1 г. + (0.913 <=1.220), д.у.з. 0.05 г. + (0.913 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. - (1.418 > 1.220), д.у.з. 0.05 г. – (1.418 > 1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. - (1.397 > 1.220), д.у.з. 0.05 г. – (1.397 > 1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. - (1.309 > 1.220), д.у.з. 0.05 г. + (1.309 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. - (1.266 > 1.220), д.у.з. 0.05 г. + (1.266 <=1.360)
+В. р.      5 и    100: д.у.з. 0.1 г. + (1.200 <=1.220), д.у.з. 0.05 г. + (1.200 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. - (1.300 > 1.220), д.у.з. 0.05 г. + (1.300 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. - (1.283 > 1.220), д.у.з. 0.05 г. + (1.283 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. - (1.336 > 1.220), д.у.з. 0.05 г. + (1.336 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. - (1.305 > 1.220), д.у.з. 0.05 г. + (1.305 <=1.360)
+В. р.      5 и   1000: д.у.з. 0.1 г. - (1.285 > 1.220), д.у.з. 0.05 г. + (1.285 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. - (1.281 > 1.220), д.у.з. 0.05 г. + (1.281 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. - (1.281 > 1.220), д.у.з. 0.05 г. + (1.281 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. - (1.277 > 1.220), д.у.з. 0.05 г. + (1.277 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. - (1.277 > 1.220), д.у.з. 0.05 г. + (1.277 <=1.360)
+В. р.      5 и 100000: д.у.з. 0.1 г. - (1.278 > 1.220), д.у.з. 0.05 г. + (1.278 <=1.360)
+В. р.     10 и     10: д.у.з. 0.1 г. + (0.894 <=1.220), д.у.з. 0.05 г. + (0.894 <=1.360)
+В. р.     10 и     10: д.у.з. 0.1 г. + (0.671 <=1.220), д.у.з. 0.05 г. + (0.671 <=1.360)
+В. р.     10 и     10: д.у.з. 0.1 г. + (0.447 <=1.220), д.у.з. 0.05 г. + (0.447 <=1.360)
+В. р.     10 и     10: д.у.з. 0.1 г. + (0.671 <=1.220), д.у.з. 0.05 г. + (0.671 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.874 <=1.220), д.у.з. 0.05 г. + (0.874 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.603 <=1.220), д.у.з. 0.05 г. + (0.603 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.663 <=1.220), д.у.з. 0.05 г. + (0.663 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.482 <=1.220), д.у.з. 0.05 г. + (0.482 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.633 <=1.220), д.у.з. 0.05 г. + (0.633 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.507 <=1.220), д.у.з. 0.05 г. + (0.507 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.532 <=1.220), д.у.з. 0.05 г. + (0.532 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.598 <=1.220), д.у.з. 0.05 г. + (0.598 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.551 <=1.220), д.у.з. 0.05 г. + (0.551 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.570 <=1.220), д.у.з. 0.05 г. + (0.570 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.549 <=1.220), д.у.з. 0.05 г. + (0.549 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.549 <=1.220), д.у.з. 0.05 г. + (0.549 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.544 <=1.220), д.у.з. 0.05 г. + (0.544 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.541 <=1.220), д.у.з. 0.05 г. + (0.541 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.554 <=1.220), д.у.з. 0.05 г. + (0.554 <=1.360)
+В. р.     10 и     10: д.у.з. 0.1 г. + (0.894 <=1.220), д.у.з. 0.05 г. + (0.894 <=1.360)
+В. р.     10 и     10: д.у.з. 0.1 г. + (0.894 <=1.220), д.у.з. 0.05 г. + (0.894 <=1.360)
+В. р.     10 и     10: д.у.з. 0.1 г. + (0.894 <=1.220), д.у.з. 0.05 г. + (0.894 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. - (1.357 > 1.220), д.у.з. 0.05 г. + (1.357 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. - (1.327 > 1.220), д.у.з. 0.05 г. + (1.327 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. - (1.236 > 1.220), д.у.з. 0.05 г. + (1.236 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (1.176 <=1.220), д.у.з. 0.05 г. + (1.176 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (1.055 <=1.220), д.у.з. 0.05 г. + (1.055 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. - (1.278 > 1.220), д.у.з. 0.05 г. + (1.278 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. - (1.268 > 1.220), д.у.з. 0.05 г. + (1.268 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. - (1.331 > 1.220), д.у.з. 0.05 г. + (1.331 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. - (1.265 > 1.220), д.у.з. 0.05 г. + (1.265 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. - (1.252 > 1.220), д.у.з. 0.05 г. + (1.252 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. - (1.245 > 1.220), д.у.з. 0.05 г. + (1.245 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. - (1.249 > 1.220), д.у.з. 0.05 г. + (1.249 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. - (1.241 > 1.220), д.у.з. 0.05 г. + (1.241 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. - (1.244 > 1.220), д.у.з. 0.05 г. + (1.244 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. - (1.242 > 1.220), д.у.з. 0.05 г. + (1.242 <=1.360)
+В. р.     10 и     10: д.у.з. 0.1 г. + (0.671 <=1.220), д.у.з. 0.05 г. + (0.671 <=1.360)
+В. р.     10 и     10: д.у.з. 0.1 г. + (0.894 <=1.220), д.у.з. 0.05 г. + (0.894 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.603 <=1.220), д.у.з. 0.05 г. + (0.603 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.513 <=1.220), д.у.з. 0.05 г. + (0.513 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.573 <=1.220), д.у.з. 0.05 г. + (0.573 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (1.025 <=1.220), д.у.з. 0.05 г. + (1.025 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.603 <=1.220), д.у.з. 0.05 г. + (0.603 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.648 <=1.220), д.у.з. 0.05 г. + (0.648 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.636 <=1.220), д.у.з. 0.05 г. + (0.636 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.557 <=1.220), д.у.з. 0.05 г. + (0.557 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.661 <=1.220), д.у.з. 0.05 г. + (0.661 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.620 <=1.220), д.у.з. 0.05 г. + (0.620 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.643 <=1.220), д.у.з. 0.05 г. + (0.643 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.638 <=1.220), д.у.з. 0.05 г. + (0.638 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.641 <=1.220), д.у.з. 0.05 г. + (0.641 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.639 <=1.220), д.у.з. 0.05 г. + (0.639 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.633 <=1.220), д.у.з. 0.05 г. + (0.633 <=1.360)
+В. р.     10 и     10: д.у.з. 0.1 г. + (0.671 <=1.220), д.у.з. 0.05 г. + (0.671 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.874 <=1.220), д.у.з. 0.05 г. + (0.874 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.633 <=1.220), д.у.з. 0.05 г. + (0.633 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.663 <=1.220), д.у.з. 0.05 г. + (0.663 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.362 <=1.220), д.у.з. 0.05 г. + (0.362 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.573 <=1.220), д.у.з. 0.05 г. + (0.573 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.570 <=1.220), д.у.з. 0.05 г. + (0.570 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.604 <=1.220), д.у.з. 0.05 г. + (0.604 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.664 <=1.220), д.у.з. 0.05 г. + (0.664 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.573 <=1.220), д.у.з. 0.05 г. + (0.573 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.632 <=1.220), д.у.з. 0.05 г. + (0.632 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.595 <=1.220), д.у.з. 0.05 г. + (0.595 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.596 <=1.220), д.у.з. 0.05 г. + (0.596 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.588 <=1.220), д.у.з. 0.05 г. + (0.588 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.593 <=1.220), д.у.з. 0.05 г. + (0.593 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.602 <=1.220), д.у.з. 0.05 г. + (0.602 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (1.146 <=1.220), д.у.з. 0.05 г. + (1.146 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.905 <=1.220), д.у.з. 0.05 г. + (0.905 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.935 <=1.220), д.у.з. 0.05 г. + (0.935 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.995 <=1.220), д.у.з. 0.05 г. + (0.995 <=1.360)
+В. р.     10 и    100: д.у.з. 0.1 г. + (0.844 <=1.220), д.у.з. 0.05 г. + (0.844 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.957 <=1.220), д.у.з. 0.05 г. + (0.957 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.919 <=1.220), д.у.з. 0.05 г. + (0.919 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.975 <=1.220), д.у.з. 0.05 г. + (0.975 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.953 <=1.220), д.у.з. 0.05 г. + (0.953 <=1.360)
+В. р.     10 и   1000: д.у.з. 0.1 г. + (0.925 <=1.220), д.у.з. 0.05 г. + (0.925 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.933 <=1.220), д.у.з. 0.05 г. + (0.933 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.937 <=1.220), д.у.з. 0.05 г. + (0.937 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.933 <=1.220), д.у.з. 0.05 г. + (0.933 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.926 <=1.220), д.у.з. 0.05 г. + (0.926 <=1.360)
+В. р.     10 и 100000: д.у.з. 0.1 г. + (0.935 <=1.220), д.у.з. 0.05 г. + (0.935 <=1.360)
+В. р.    100 и    100: д.у.з. 0.1 г. + (0.778 <=1.220), д.у.з. 0.05 г. + (0.778 <=1.360)
+В. р.    100 и    100: д.у.з. 0.1 г. + (0.849 <=1.220), д.у.з. 0.05 г. + (0.849 <=1.360)
+В. р.    100 и    100: д.у.з. 0.1 г. - (1.697 > 1.220), д.у.з. 0.05 г. – (1.697 > 1.360)
+В. р.    100 и    100: д.у.з. 0.1 г. + (0.919 <=1.220), д.у.з. 0.05 г. + (0.919 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. - (1.363 > 1.220), д.у.з. 0.05 г. – (1.363 > 1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. - (1.335 > 1.220), д.у.з. 0.05 г. + (1.335 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (1.096 <=1.220), д.у.з. 0.05 г. + (1.096 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. - (1.249 > 1.220), д.у.з. 0.05 г. + (1.249 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (1.192 <=1.220), д.у.з. 0.05 г. + (1.192 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. - (1.252 > 1.220), д.у.з. 0.05 г. + (1.252 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. - (1.252 > 1.220), д.у.з. 0.05 г. + (1.252 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. - (1.261 > 1.220), д.у.з. 0.05 г. + (1.261 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. - (1.271 > 1.220), д.у.з. 0.05 г. + (1.271 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. - (1.242 > 1.220), д.у.з. 0.05 г. + (1.242 <=1.360)
+В. р.    100 и    100: д.у.з. 0.1 г. + (0.424 <=1.220), д.у.з. 0.05 г. + (0.424 <=1.360)
+В. р.    100 и    100: д.у.з. 0.1 г. - (1.344 > 1.220), д.у.з. 0.05 г. + (1.344 <=1.360)
+В. р.    100 и    100: д.у.з. 0.1 г. + (0.707 <=1.220), д.у.з. 0.05 г. + (0.707 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.629 <=1.220), д.у.з. 0.05 г. + (0.629 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.696 <=1.220), д.у.з. 0.05 г. + (0.696 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.458 <=1.220), д.у.з. 0.05 г. + (0.458 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.715 <=1.220), д.у.з. 0.05 г. + (0.715 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.610 <=1.220), д.у.з. 0.05 г. + (0.610 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.730 <=1.220), д.у.з. 0.05 г. + (0.730 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.710 <=1.220), д.у.з. 0.05 г. + (0.710 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.724 <=1.220), д.у.з. 0.05 г. + (0.724 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.738 <=1.220), д.у.з. 0.05 г. + (0.738 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.725 <=1.220), д.у.з. 0.05 г. + (0.725 <=1.360)
+В. р.    100 и    100: д.у.з. 0.1 г. + (1.131 <=1.220), д.у.з. 0.05 г. + (1.131 <=1.360)
+В. р.    100 и    100: д.у.з. 0.1 г. + (0.495 <=1.220), д.у.з. 0.05 г. + (0.495 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.868 <=1.220), д.у.з. 0.05 г. + (0.868 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.877 <=1.220), д.у.з. 0.05 г. + (0.877 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.610 <=1.220), д.у.з. 0.05 г. + (0.610 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.763 <=1.220), д.у.з. 0.05 г. + (0.763 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.696 <=1.220), д.у.з. 0.05 г. + (0.696 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.739 <=1.220), д.у.з. 0.05 г. + (0.739 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.735 <=1.220), д.у.з. 0.05 г. + (0.735 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.741 <=1.220), д.у.з. 0.05 г. + (0.741 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.756 <=1.220), д.у.з. 0.05 г. + (0.756 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.727 <=1.220), д.у.з. 0.05 г. + (0.727 <=1.360)
+В. р.    100 и    100: д.у.з. 0.1 г. + (1.131 <=1.220), д.у.з. 0.05 г. + (1.131 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. - (1.325 > 1.220), д.у.з. 0.05 г. + (1.325 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. - (1.373 > 1.220), д.у.з. 0.05 г. – (1.373 > 1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. - (1.611 > 1.220), д.у.з. 0.05 г. – (1.611 > 1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. - (1.335 > 1.220), д.у.з. 0.05 г. + (1.335 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. - (1.468 > 1.220), д.у.з. 0.05 г. – (1.468 > 1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. - (1.412 > 1.220), д.у.з. 0.05 г. – (1.412 > 1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. - (1.431 > 1.220), д.у.з. 0.05 г. – (1.431 > 1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. - (1.422 > 1.220), д.у.з. 0.05 г. – (1.422 > 1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. - (1.428 > 1.220), д.у.з. 0.05 г. – (1.428 > 1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. - (1.443 > 1.220), д.у.з. 0.05 г. – (1.443 > 1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.572 <=1.220), д.у.з. 0.05 г. + (0.572 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.553 <=1.220), д.у.з. 0.05 г. + (0.553 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.715 <=1.220), д.у.з. 0.05 г. + (0.715 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.553 <=1.220), д.у.з. 0.05 г. + (0.553 <=1.360)
+В. р.    100 и   1000: д.у.з. 0.1 г. + (0.477 <=1.220), д.у.з. 0.05 г. + (0.477 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.479 <=1.220), д.у.з. 0.05 г. + (0.479 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.483 <=1.220), д.у.з. 0.05 г. + (0.483 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.464 <=1.220), д.у.з. 0.05 г. + (0.464 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.469 <=1.220), д.у.з. 0.05 г. + (0.469 <=1.360)
+В. р.    100 и 100000: д.у.з. 0.1 г. + (0.471 <=1.220), д.у.з. 0.05 г. + (0.471 <=1.360)
+В. р.   1000 и   1000: д.у.з. 0.1 г. + (0.559 <=1.220), д.у.з. 0.05 г. + (0.559 <=1.360)
+В. р.   1000 и   1000: д.у.з. 0.1 г. + (0.939 <=1.220), д.у.з. 0.05 г. + (0.939 <=1.360)
+В. р.   1000 и   1000: д.у.з. 0.1 г. + (0.581 <=1.220), д.у.з. 0.05 г. + (0.581 <=1.360)
+В. р.   1000 и   1000: д.у.з. 0.1 г. + (0.738 <=1.220), д.у.з. 0.05 г. + (0.738 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.658 <=1.220), д.у.з. 0.05 г. + (0.658 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.656 <=1.220), д.у.з. 0.05 г. + (0.656 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.623 <=1.220), д.у.з. 0.05 г. + (0.623 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.654 <=1.220), д.у.з. 0.05 г. + (0.654 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.698 <=1.220), д.у.з. 0.05 г. + (0.698 <=1.360)
+В. р.   1000 и   1000: д.у.з. 0.1 г. + (0.805 <=1.220), д.у.з. 0.05 г. + (0.805 <=1.360)
+В. р.   1000 и   1000: д.у.з. 0.1 г. + (0.470 <=1.220), д.у.з. 0.05 г. + (0.470 <=1.360)
+В. р.   1000 и   1000: д.у.з. 0.1 г. + (0.626 <=1.220), д.у.з. 0.05 г. + (0.626 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.671 <=1.220), д.у.з. 0.05 г. + (0.671 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.679 <=1.220), д.у.з. 0.05 г. + (0.679 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.663 <=1.220), д.у.з. 0.05 г. + (0.663 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.631 <=1.220), д.у.з. 0.05 г. + (0.631 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.722 <=1.220), д.у.з. 0.05 г. + (0.722 <=1.360)
+В. р.   1000 и   1000: д.у.з. 0.1 г. + (0.760 <=1.220), д.у.з. 0.05 г. + (0.760 <=1.360)
+В. р.   1000 и   1000: д.у.з. 0.1 г. + (0.693 <=1.220), д.у.з. 0.05 г. + (0.693 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (1.023 <=1.220), д.у.з. 0.05 г. + (1.023 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.978 <=1.220), д.у.з. 0.05 г. + (0.978 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.999 <=1.220), д.у.з. 0.05 г. + (0.999 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (1.006 <=1.220), д.у.з. 0.05 г. + (1.006 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.993 <=1.220), д.у.з. 0.05 г. + (0.993 <=1.360)
+В. р.   1000 и   1000: д.у.з. 0.1 г. + (0.514 <=1.220), д.у.з. 0.05 г. + (0.514 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.523 <=1.220), д.у.з. 0.05 г. + (0.523 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.581 <=1.220), д.у.з. 0.05 г. + (0.581 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.491 <=1.220), д.у.з. 0.05 г. + (0.491 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.528 <=1.220), д.у.з. 0.05 г. + (0.528 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.546 <=1.220), д.у.з. 0.05 г. + (0.546 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.766 <=1.220), д.у.з. 0.05 г. + (0.766 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.722 <=1.220), д.у.з. 0.05 г. + (0.722 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.738 <=1.220), д.у.з. 0.05 г. + (0.738 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.717 <=1.220), д.у.з. 0.05 г. + (0.717 <=1.360)
+В. р.   1000 и 100000: д.у.з. 0.1 г. + (0.667 <=1.220), д.у.з. 0.05 г. + (0.667 <=1.360)
+В. р. 100000 и 100000: д.у.з. 0.1 г. + (0.671 <=1.220), д.у.з. 0.05 г. + (0.671 <=1.360)
+В. р. 100000 и 100000: д.у.з. 0.1 г. + (0.713 <=1.220), д.у.з. 0.05 г. + (0.713 <=1.360)
+В. р. 100000 и 100000: д.у.з. 0.1 г. + (0.619 <=1.220), д.у.з. 0.05 г. + (0.619 <=1.360)
+В. р. 100000 и 100000: д.у.з. 0.1 г. + (0.821 <=1.220), д.у.з. 0.05 г. + (0.821 <=1.360)
+В. р. 100000 и 100000: д.у.з. 0.1 г. + (0.783 <=1.220), д.у.з. 0.05 г. + (0.783 <=1.360)
+В. р. 100000 и 100000: д.у.з. 0.1 г. + (0.877 <=1.220), д.у.з. 0.05 г. + (0.877 <=1.360)
+В. р. 100000 и 100000: д.у.з. 0.1 г. + (0.622 <=1.220), д.у.з. 0.05 г. + (0.622 <=1.360)
+В. р. 100000 и 100000: д.у.з. 0.1 г. + (0.760 <=1.220), д.у.з. 0.05 г. + (0.760 <=1.360)
+В. р. 100000 и 100000: д.у.з. 0.1 г. + (1.125 <=1.220), д.у.з. 0.05 г. + (1.125 <=1.360)
+В. р. 100000 и 100000: д.у.з. 0.1 г. + (1.020 <=1.220), д.у.з. 0.05 г. + (1.020 <=1.360)
+\end{Verbatim}
+}
+    \hypertarget{ux43fux440ux43eux432ux435ux440ux43aux430-ux43fux430ux440ux430ux43cux435ux442ux440ux438ux447ux435ux441ux43aux438ux445-ux433ux438ux43fux43eux442ux435ux437}{%
+\section*{4.2 Проверка параметрических
+гипотез}\label{ux43fux440ux43eux432ux435ux440ux43aux430-ux43fux430ux440ux430ux43cux435ux442ux440ux438ux447ux435ux441ux43aux438ux445-ux433ux438ux43fux43eux442ux435ux437}}
+
+    \hypertarget{ux432ux44bux431ux43eux440-ux434ux430ux43dux43dux44bux445}{%
+\subsection*{4.2.1 Выбор
+данных}\label{ux432ux44bux431ux43eux440-ux434ux430ux43dux43dux44bux445}}
+
+В качестве данных возьмем выборки из распределения Ципфа с параметрами
+\(s=1.5\), \(N=15\), а также сгенерируем второй набор выборок с
+параметрами \(s=1.7\), \(N=15\).
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{26}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{zipf\PYZus{}s2} \PY{o}{=} \PY{l+m+mf}{2.}
+\PY{n}{zipf\PYZus{}samples2} \PY{o}{=} \PY{n}{generate\PYZus{}samples}\PY{p}{(}\PY{n}{zipf\PYZus{}random}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{n}{zipf\PYZus{}s2}\PY{p}{,} \PY{n}{N}\PY{o}{=}\PY{n}{zipf\PYZus{}N}\PY{p}{)}
+\PY{n}{zipf\PYZus{}var\PYZus{}series2} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+\PY{k}{for} \PY{n}{sample\PYZus{}size}\PY{p}{,} \PY{n}{samples} \PY{o+ow}{in} \PY{n}{zipf\PYZus{}samples2}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{zipf\PYZus{}var\PYZus{}series2}\PY{p}{[}\PY{n}{sample\PYZus{}size}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{n+nb}{sorted}\PY{p}{(}\PY{n}{sample}\PY{p}{)} \PY{k}{for} \PY{n}{sample} \PY{o+ow}{in} \PY{n}{samples}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{ux43fux43eux441ux442ux430ux43dux43eux432ux43aux430-ux437ux430ux434ux430ux447ux438}{%
+\subsection*{4.2.2 Постановка
+задачи}\label{ux43fux43eux441ux442ux430ux43dux43eux432ux43aux430-ux437ux430ux434ux430ux447ux438}}
+
+    Дана реализация выборки из какого-либо распределения, вид распределения
+считаем известным. Рассматриваются две гипотезы: \(H_0\) --- реализация
+выборки соответствует распределению с параметром \(\theta_0\), \(H_1\) ---
+реализация выборки соответствует распределению с параметром
+\(\theta_1\). Необходимо выбрать одну из этих гипотез и отвергнуть
+другую.
+
+Необходимо выработать критерий --- правило, по которому по реализации
+выборки мы принимаем либо гипотезу \(H_0\), либо гипотезу \(H_1\). Этот
+критерий делит выборочное пространство \(\mathbb{X}\) на
+\(\mathbb{X}_0\) и \(\mathbb{X}_1\), соответствующие гипотезам \(H_0\) и
+\(H_1\) соответственно.
+
+В частности, в нашем случае: 
+\begin{itemize}
+	\item \(H_0\): \(s=1.5\)
+	\item \(H_1\): \(s=3\)
+\end{itemize}
+
+    Ошибка первого рода \(\alpha\) --- отвержение гипотезы \(H_0\) при ее
+истинности; ошибка второго рода \(\beta\) --- принятие гипотезы \(H_0\)
+при ее ложности.
+
+\(\alpha=\mathbb{P}\left\{x\in\mathbb{X}_1|H_0\right\}\)
+
+\(\beta=\mathbb{P}\left\{x\in\mathbb{X}_0|H_1\right\}\)
+
+Функция мощности --- это вероятность отвергнуть гипотезу \(H_0\) при
+заданном распределении наблюдений \(\mathbb{Y}\), т.е. функция мощности
+--- это функция от распределения наблюдений \(\mathbb{Y}\):
+
+\(g\left(\mathbb{Y}\right)=\mathbb{P}\left\{x\in\mathbb{Y}|H_0\right\}\)
+
+В частности, при \(\mathbb{Y}=\mathbb{X}_1\) получаем
+\(g\left(\mathbb{X}_1\right)=\alpha\)
+
+    \hypertarget{ux432ux44bux447ux438ux441ux43bux435ux43dux438ux435-ux444ux443ux43dux43aux446ux438ux438-ux43eux442ux43dux43eux448ux435ux43dux438ux44f-ux43fux440ux430ux432ux434ux43eux43fux43eux434ux43eux431ux438ux44f}{%
+\subsection*{4.2.3 Вычисление функции отношения
+правдоподобия}\label{ux432ux44bux447ux438ux441ux43bux435ux43dux438ux435-ux444ux443ux43dux43aux446ux438ux438-ux43eux442ux43dux43eux448ux435ux43dux438ux44f-ux43fux440ux430ux432ux434ux43eux43fux43eux434ux43eux431ux438ux44f}}
+
+    \(l\left(\vec{x}\right)=\dfrac{L\left(\vec{x},\theta_1\right)}{L\left(\vec{x},\theta_0\right)}\)
+
+Гипотеза \(H_0\) принимается при выполнении \(l\left(\vec{x}\right)<c\)
+
+Пусть \(\vec{x}\) имеет размер \(n\), \(N\) - второй параметр
+распределения Ципфа, тогда:
+
+\(L\left(\vec{x},s_i\right)=\prod\limits_{i=1}^{n}\dfrac{{x_i}^{-s}}{\sum\limits_{j=1}^{N}j^{-s}}= \left[\sum\limits_{j=1}^{N}j^{-s}\right]^{-n}\prod\limits_{i=1}^{n}{x_i}^{-s}\)
+
+\(\ln{L\left(\vec{x},s_i\right)}=-n\ln\left[\sum\limits_{j=1}^{N}j^{-s}\right]-s\sum\limits_{i=1}^{n}\ln{x_i}\)
+
+    \hypertarget{ux432ux44bux447ux438ux441ux43bux435ux43dux438ux435-ux43aux440ux438ux442ux438ux447ux435ux441ux43aux43eux439-ux43eux431ux43bux430ux441ux442ux438ux43aux43eux43bux438ux447ux435ux441ux442ux432ux430-ux43cux430ux442ux435ux440ux438ux430ux43bux430}{%
+\subsection*{4.2.4 Вычисление критической области/количества
+материала}\label{ux432ux44bux447ux438ux441ux43bux435ux43dux438ux435-ux43aux440ux438ux442ux438ux447ux435ux441ux43aux43eux439-ux43eux431ux43bux430ux441ux442ux438ux43aux43eux43bux438ux447ux435ux441ux442ux432ux430-ux43cux430ux442ux435ux440ux438ux430ux43bux430}}
+
+    \(\ln{l\left(\vec{x}\right)}=\ln{L\left(\vec{x},s_1\right)}-\ln{L\left(\vec{x},s_0\right)}= -n\ln\left[\sum\limits_{j=1}^{N}j^{-s_1}\right]-s_1\sum\limits_{i=1}^{n}\ln{x_i}+ n\ln\left[\sum\limits_{j=1}^{N}j^{-s_0}\right]+s_0\sum\limits_{i=1}^{n}\ln{x_i}= n\ln\left[\dfrac{\sum\limits_{j=1}^{N}j^{-s_0}}{\sum\limits_{j=1}^{N}j^{-s_1}}\right]+\left(s_0-s_1\right)\sum\limits_{i=1}^{n}\ln{x_i}<\ln{c}=c'\)
+
+Полагая \(s_0<s_1\):
+
+\(\sum\limits_{i=1}^{n}\ln{x_i}>\left[c'-n\ln\left(\dfrac{\sum\limits_{j=1}^{N}j^{-s_0}}{\sum\limits_{j=1}^{N}j^{-s_1}}\right)\right]\dfrac{1}{s_0-s_1}\)
+
+    По центральной предельной теореме при \(n\to\infty\):
+\(\dfrac{S_n-\mu n}{\sigma \sqrt{n}}\sim N(0,1)\) (\(\mu\), \(\sigma^2\)
+- мат. ожидание и дисперсия, \(S_n\) - сумма выборки)
+
+Посчитаем матожидание и дисперсию случайной величины \(\xi\), которая
+принимает значения \(\ln{1},\ln{2},\ldots,\ln{N}\) с вероятностями,
+соответствующими распределению Ципфа:
+
+\(\mathbb{P}\{\xi=\ln{k}\}=\dfrac{k^{-s}}{\sum\limits_{j=1}^{N}j^{-s}}\)
+
+\(\mathbb{E}\xi= \sum\limits_{k=1}^{N}\left[\ln{k}\cdot\dfrac{k^{-s}}{\sum\limits_{j=1}^{N}j^{-s}}\right]= \dfrac{\sum\limits_{k=1}^{N}k^{-s}\ln{k}}{\sum\limits_{j=1}^{N}j^{-s}};\)
+
+\(\mathbb{E}\left(\xi^2\right)= \sum\limits_{k=1}^{N}\left[\ln^2{k}k\cdot\dfrac{k^{-s}}{\sum\limits_{j=1}^{N}j^{-s}}\right]= \dfrac{\sum\limits_{k=1}^{N}k^{-s}\ln^2{k}}{\sum\limits_{j=1}^{N}j^{-s}}\)
+
+\(\mathbb{D}\xi= \mathbb{E}\left(\xi^2\right)-\left(\mathbb{E}\xi\right)^2= \dfrac{\sum\limits_{k=1}^{N}k^{-s}\ln^2{k}}{\sum\limits_{j=1}^{N}j^{-s}}-\left[\dfrac{\sum\limits_{k=1}^{N}k^{-s}\ln{k}}{\sum\limits_{j=1}^{N}j^{-s}}\right]^2\)
+
+    Итак, при принятии гипотезы \(H_0\):
+
+\(\sum\limits_{i=1}^{n}\ln{x_i}>\left[c'-n\ln\left(\dfrac{\sum\limits_{j=1}^{N}j^{-s_0}}{\sum\limits_{j=1}^{N}j^{-s_1}}\right)\right]\dfrac{1}{s_0-s_1}\)
+
+\(\dfrac{\sum\limits_{i=1}^{n}\ln{x_i}-n\cdot\mathbb{E}_0 \xi}{\sqrt{n\cdot\mathbb{D}_0 \xi}}\sim N(0,1)\)
+
+\(\dfrac{\sum\limits_{i=1}^{n}\ln{x_i}-n\cdot\mathbb{E}_0 \xi}{\sqrt{n\cdot\mathbb{D}_0 \xi}}> \dfrac{\left[c'-n\ln\left(\dfrac{\sum\limits_{j=1}^{N}j^{-s_0}}{\sum\limits_{j=1}^{N}j^{-s_1}}\right)\right]\dfrac{1}{s_0-s_1}-n\cdot\mathbb{E}_0 \xi}{\sqrt{n\cdot\mathbb{D}_0 \xi}}\)
+
+Принятие гипотезы \(H_0\) происходит в случае
+\(t=\dfrac{\sum\limits_{i=1}^{n}\ln{x_i}-n\cdot\mathbb{E}_0 \xi}{\sqrt{n\cdot\mathbb{D}_0 \xi}}<t_{\alpha}\),
+где \(t_{\alpha}\) --- квантиль нормального распределения уровня
+\(\alpha\). Отсюда можно посчитать \(c'\) и \(c\).
+
+При принятии \(H_0\) отвергается \(H_1\); при отвержении \(H_0\)
+принимается \(H_1\). Точного равенства квантилю произойти не может (т.к.
+происходит переход к абсолютно непрерывному нормальному распределению),
+но если бы такое случилось, нужно было бы подбросить монетку.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{27}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{norm\PYZus{}quantiles} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.05}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{1.645}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{l+m+mf}{1.282}\PY{p}{\PYZcb{}}
+
+\PY{k}{def} \PY{n+nf}{find\PYZus{}expected}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{:}
+    \PY{n}{values} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{zipf\PYZus{}N} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+    \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{values} \PY{o}{*}\PY{o}{*} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{s}\PY{p}{)} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{values}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{values} \PY{o}{*}\PY{o}{*} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{s}\PY{p}{)}\PY{p}{)}
+
+\PY{k}{def} \PY{n+nf}{find\PYZus{}variance}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{:}
+    \PY{n}{values} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{zipf\PYZus{}N} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+    \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{values} \PY{o}{*}\PY{o}{*} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{s}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{values}\PY{p}{)}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{values} \PY{o}{*}\PY{o}{*} \PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{s}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{find\PYZus{}expected}\PY{p}{(}\PY{n}{s}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}
+
+\PY{k}{def} \PY{n+nf}{find\PYZus{}t}\PY{p}{(}\PY{n}{sample}\PY{p}{,} \PY{n}{s}\PY{p}{)}\PY{p}{:}
+    \PY{n}{n} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{sample}\PY{p}{)}
+    \PY{n}{expected} \PY{o}{=} \PY{n}{find\PYZus{}expected}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+    \PY{n}{variance} \PY{o}{=} \PY{n}{find\PYZus{}variance}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+    \PY{k}{return} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{sample}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{n} \PY{o}{*} \PY{n}{expected}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{n} \PY{o}{*} \PY{n}{variance}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Для реализаций выборок, сгенерированных с параметром \(s_0=1.5\)
+(звездочкой помечены ошибки первого рода):
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{28}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{sample\PYZus{}size}\PY{p}{,} \PY{n}{var\PYZus{}series} \PY{o+ow}{in} \PY{n}{zipf\PYZus{}var\PYZus{}series}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Выборки объема }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sample\PYZus{}size}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{sample} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{t} \PY{o}{=} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{find\PYZus{}t}\PY{p}{(}\PY{n}{sample}\PY{p}{,} \PY{n}{zipf\PYZus{}s}\PY{p}{)}\PY{p}{)}
+        \PY{k}{for} \PY{n}{alpha} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.05}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:20\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  д.у.з. }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{alpha} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ принимается }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{if} \PY{n}{t} \PY{o}{\PYZlt{}} \PY{n}{norm\PYZus{}quantiles}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{H0 (}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{ \PYZlt{} }\PY{l+s+si}{\PYZob{}:5.3f\PYZcb{}}\PY{l+s+s2}{) }\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{t}\PY{p}{,} \PY{n}{norm\PYZus{}quantiles}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{H1 (}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{ \PYZgt{} }\PY{l+s+si}{\PYZob{}:5.3f\PYZcb{}}\PY{l+s+s2}{) * |}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{t}\PY{p}{,} \PY{n}{norm\PYZus{}quantiles}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+{\fontsize{11}{11}
+    \begin{Verbatim}[commandchars=\\\{\}]
+Выборки объема 5
+1: д.у.з. 0.1 H0 (0.199 < 1.282)   | д.у.з. 0.05 H0 (0.199 < 1.645) 
+2: д.у.з. 0.1 H0 (0.459 < 1.282)   | д.у.з. 0.05 H0 (0.459 < 1.645) 
+3: д.у.з. 0.1 H0 (0.834 < 1.282)   | д.у.з. 0.05 H0 (0.834 < 1.645) 
+4: д.у.з. 0.1 H1 (2.025 > 1.282) * | д.у.з. 0.05 H1 (2.025 > 1.645) *
+5: д.у.з. 0.1 H0 (0.156 < 1.282)   | д.у.з. 0.05 H0 (0.156 < 1.645) 
+Выборки объема 10
+1: д.у.з. 0.1 H0 (0.857 < 1.282)   | д.у.з. 0.05 H0 (0.857 < 1.645) 
+2: д.у.з. 0.1 H0 (0.699 < 1.282)   | д.у.з. 0.05 H0 (0.699 < 1.645) 
+3: д.у.з. 0.1 H1 (2.220 > 1.282) * | д.у.з. 0.05 H1 (2.220 > 1.645) *
+4: д.у.з. 0.1 H1 (2.086 > 1.282) * | д.у.з. 0.05 H1 (2.086 > 1.645) *
+5: д.у.з. 0.1 H1 (1.555 > 1.282) * | д.у.з. 0.05 H0 (1.555 < 1.645) 
+Выборки объема 100
+1: д.у.з. 0.1 H0 (0.553 < 1.282)   | д.у.з. 0.05 H0 (0.553 < 1.645) 
+2: д.у.з. 0.1 H0 (0.689 < 1.282)   | д.у.з. 0.05 H0 (0.689 < 1.645) 
+3: д.у.з. 0.1 H1 (1.299 > 1.282) * | д.у.з. 0.05 H0 (1.299 < 1.645) 
+4: д.у.з. 0.1 H0 (0.514 < 1.282)   | д.у.з. 0.05 H0 (0.514 < 1.645) 
+5: д.у.з. 0.1 H0 (0.928 < 1.282)   | д.у.з. 0.05 H0 (0.928 < 1.645) 
+Выборки объема 1000
+1: д.у.з. 0.1 H0 (1.103 < 1.282)   | д.у.з. 0.05 H0 (1.103 < 1.645) 
+2: д.у.з. 0.1 H0 (0.353 < 1.282)   | д.у.з. 0.05 H0 (0.353 < 1.645) 
+3: д.у.з. 0.1 H0 (0.193 < 1.282)   | д.у.з. 0.05 H0 (0.193 < 1.645) 
+4: д.у.з. 0.1 H0 (0.691 < 1.282)   | д.у.з. 0.05 H0 (0.691 < 1.645) 
+5: д.у.з. 0.1 H0 (0.233 < 1.282)   | д.у.з. 0.05 H0 (0.233 < 1.645) 
+Выборки объема 100000
+1: д.у.з. 0.1 H0 (1.054 < 1.282)   | д.у.з. 0.05 H0 (1.054 < 1.645) 
+2: д.у.з. 0.1 H0 (0.397 < 1.282)   | д.у.з. 0.05 H0 (0.397 < 1.645) 
+3: д.у.з. 0.1 H0 (0.038 < 1.282)   | д.у.з. 0.05 H0 (0.038 < 1.645) 
+4: д.у.з. 0.1 H1 (2.219 > 1.282) * | д.у.з. 0.05 H1 (2.219 > 1.645) *
+5: д.у.з. 0.1 H0 (0.527 < 1.282)   | д.у.з. 0.05 H0 (0.527 < 1.645)
+\end{Verbatim}
+}
+
+    Для реализаций выборок, сгенерированных с параметром \(s_1=2\)
+(звездочкой помечены ошибки второго рода):
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{29}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{sample\PYZus{}size}\PY{p}{,} \PY{n}{var\PYZus{}series} \PY{o+ow}{in} \PY{n}{zipf\PYZus{}var\PYZus{}series2}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Выборки объема }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{sample\PYZus{}size}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{sample} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{var\PYZus{}series}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{t} \PY{o}{=} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{find\PYZus{}t}\PY{p}{(}\PY{n}{sample}\PY{p}{,} \PY{n}{zipf\PYZus{}s}\PY{p}{)}\PY{p}{)}
+        \PY{k}{for} \PY{n}{alpha} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.05}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}:20\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  д.у.з. }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{alpha} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ принимается }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{if} \PY{n}{t} \PY{o}{\PYZlt{}} \PY{n}{norm\PYZus{}quantiles}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{H0 (}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{ \PYZlt{} }\PY{l+s+si}{\PYZob{}:5.3f\PYZcb{}}\PY{l+s+s2}{) * |}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{t}\PY{p}{,} \PY{n}{norm\PYZus{}quantiles}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{H1 (}\PY{l+s+si}{\PYZob{}:6.3f\PYZcb{}}\PY{l+s+s2}{ \PYZgt{} }\PY{l+s+si}{\PYZob{}:5.3f\PYZcb{}}\PY{l+s+s2}{) }\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{t}\PY{p}{,} \PY{n}{norm\PYZus{}quantiles}\PY{p}{[}\PY{n}{alpha}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Выборки объема 5
+1: д.у.з. 0.1 H1 (1.365 > 1.282)   | д.у.з. 0.05 H0 (1.365 < 1.645) *
+2: д.у.з. 0.1 H0 (0.020 < 1.282) * | д.у.з. 0.05 H0 (0.020 < 1.645) *
+3: д.у.з. 0.1 H0 (0.990 < 1.282) * | д.у.з. 0.05 H0 (0.990 < 1.645) *
+4: д.у.з. 0.1 H0 (0.156 < 1.282) * | д.у.з. 0.05 H0 (0.156 < 1.645) *
+5: д.у.з. 0.1 H0 (1.089 < 1.282) * | д.у.з. 0.05 H0 (1.089 < 1.645) *
+Выборки объема 10
+1: д.у.з. 0.1 H0 (0.323 < 1.282) * | д.у.з. 0.05 H0 (0.323 < 1.645) *
+2: д.у.з. 0.1 H1 (1.470 > 1.282)   | д.у.з. 0.05 H0 (1.470 < 1.645) *
+3: д.у.з. 0.1 H0 (0.293 < 1.282) * | д.у.з. 0.05 H0 (0.293 < 1.645) *
+4: д.у.з. 0.1 H1 (1.821 > 1.282)   | д.у.з. 0.05 H1 (1.821 > 1.645) 
+5: д.у.з. 0.1 H0 (0.870 < 1.282) * | д.у.з. 0.05 H0 (0.870 < 1.645) *
+Выборки объема 100
+1: д.у.з. 0.1 H1 (2.765 > 1.282)   | д.у.з. 0.05 H1 (2.765 > 1.645) 
+2: д.у.з. 0.1 H1 (4.113 > 1.282)   | д.у.з. 0.05 H1 (4.113 > 1.645) 
+3: д.у.з. 0.1 H1 (4.292 > 1.282)   | д.у.з. 0.05 H1 (4.292 > 1.645) 
+4: д.у.з. 0.1 H1 (3.051 > 1.282)   | д.у.з. 0.05 H1 (3.051 > 1.645) 
+5: д.у.з. 0.1 H1 (4.433 > 1.282)   | д.у.з. 0.05 H1 (4.433 > 1.645) 
+Выборки объема 1000
+1: д.у.з. 0.1 H1 10.718 > 1.282)   | д.у.з. 0.05 H1 (10.718 > 1.645) 
+2: д.у.з. 0.1 H1 11.329 > 1.282)   | д.у.з. 0.05 H1 (11.329 > 1.645) 
+3: д.у.з. 0.1 H1 11.119 > 1.282)   | д.у.з. 0.05 H1 (11.119 > 1.645) 
+4: д.у.з. 0.1 H1 10.121 > 1.282)   | д.у.з. 0.05 H1 (10.121 > 1.645) 
+5: д.у.з. 0.1 H1 10.908 > 1.282)   | д.у.з. 0.05 H1 (10.908 > 1.645) 
+Выборки объема 100000
+1: д.у.з. 0.1 H1 108.607 > 1.282)  | д.у.з. 0.05 H1 (108.607 > 1.645) 
+2: д.у.з. 0.1 H1 108.242 > 1.282)  | д.у.з. 0.05 H1 (108.242 > 1.645) 
+3: д.у.з. 0.1 H1 109.144 > 1.282)  | д.у.з. 0.05 H1 (109.144 > 1.645) 
+4: д.у.з. 0.1 H1 108.436 > 1.282)  | д.у.з. 0.05 H1 (108.436 > 1.645) 
+5: д.у.з. 0.1 H1 109.736 > 1.282)  | д.у.з. 0.05 H1 (109.736 > 1.645) 
+\end{Verbatim}
+
+    \(\dfrac{\sum\limits_{i=1}^{n}\ln{x_i}-n\cdot\mathbb{E}_0 \xi}{\sqrt{n\cdot\mathbb{D}_0 \xi}}<t_{\alpha}\),
+отсюда
+\(\sum\limits_{i=1}^{n}\ln{x_i}<t_{\alpha}\sqrt{n\cdot\mathbb{D}_0 \xi}+n\cdot\mathbb{E}_0 \xi=A\)
+
+\(\dfrac{\sum\limits_{i=1}^{n}\ln{x_i}-n\cdot\mathbb{E}_1 \xi}{\sqrt{n\cdot\mathbb{D}_1 \xi}}< \dfrac{A-n\cdot\mathbb{E}_1 \xi}{\sqrt{n\cdot\mathbb{D}_1 \xi}}=t_{\beta}\)
+
+\(t_{\beta}=\dfrac{A-n\cdot\mathbb{E}_1 \xi}{\sqrt{n\cdot\mathbb{D}_1 \xi}}= t_{\alpha}\sqrt{\dfrac{\mathbb{D}_0 \xi}{\mathbb{D}_1 \xi}}+\sqrt{n}\dfrac{\mathbb{E}_0 \xi-\mathbb{E}_1 \xi}{\sqrt{\mathbb{D}_1 \xi}}\)
+
+\(n=\left\lceil\left(t_{\beta}-t_{\alpha}\sqrt{\dfrac{\mathbb{D}_0 \xi}{\mathbb{D}_1 \xi}}\right)^2\dfrac{\mathbb{D}_1 \xi}{\left(\mathbb{E}_0 \xi-\mathbb{E}_1 \xi\right)^2}\right\rceil\)
+--- количество материала, необходимое для различения гипотез \(H_0\) и
+\(H_1\) с заданными ошибками 1 и 2 рода
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{30}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{find\PYZus{}n}\PY{p}{(}\PY{n}{s0}\PY{p}{,} \PY{n}{s1}\PY{p}{,} \PY{n}{t\PYZus{}alpha}\PY{p}{,} \PY{n}{t\PYZus{}beta}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n+nb}{int}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{ceil}\PY{p}{(}
+        \PY{p}{(}\PY{p}{(}\PY{n}{t\PYZus{}beta} \PY{o}{\PYZhy{}} \PY{n}{t\PYZus{}alpha} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{find\PYZus{}variance}\PY{p}{(}\PY{n}{s0}\PY{p}{)} \PY{o}{/} \PY{n}{find\PYZus{}variance}\PY{p}{(}\PY{n}{s1}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}
+        \PY{o}{*} \PY{n}{find\PYZus{}variance}\PY{p}{(}\PY{n}{s1}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{p}{(}\PY{n}{find\PYZus{}expected}\PY{p}{(}\PY{n}{s0}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{find\PYZus{}expected}\PY{p}{(}\PY{n}{s1}\PY{p}{)}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}
+    \PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{31}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{s1} \PY{o+ow}{in} \PY{p}{(}\PY{n}{zipf\PYZus{}s} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{logspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+    \PY{n}{n} \PY{o}{=} \PY{n}{find\PYZus{}n}\PY{p}{(}\PY{n}{zipf\PYZus{}s}\PY{p}{,} \PY{n}{s1}\PY{p}{,} \PY{n}{norm\PYZus{}quantiles}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.05}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{norm\PYZus{}quantiles}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{0.1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Параметры }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ и }\PY{l+s+si}{\PYZob{}:.3f\PYZcb{}}\PY{l+s+s2}{, для различения с a = }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ и b = }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ нужно кол\PYZhy{}во материала }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{zipf\PYZus{}s}\PY{p}{,} \PY{n}{s1}\PY{p}{,} \PY{l+m+mf}{0.05}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+{\fontsize{9.7}{10}
+    \begin{Verbatim}[commandchars=\\\{\}]
+Пар-ы 1.5 и 1.501, для разл-я с a = 0.05 и b = 0.1 нужно кол-во материала 193600
+Пар-ы 1.5 и 1.502, для разл-я с a = 0.05 и b = 0.1 нужно кол-во материала 44041
+Пар-ы 1.5 и 1.504, для разл-я с a = 0.05 и b = 0.1 нужно кол-во материала 10054
+Пар-ы 1.5 и 1.509, для разл-я с a = 0.05 и b = 0.1 нужно кол-во материала 2313
+Пар-ы 1.5 и 1.519, для разл-я с a = 0.05 и b = 0.1 нужно кол-во материала 541
+Пар-ы 1.5 и 1.541, для разл-я с a = 0.05 и b = 0.1 нужно кол-во материала 131
+Пар-ы 1.5 и 1.586, для разл-я с a = 0.05 и b = 0.1 нужно кол-во материала 34
+Пар-ы 1.5 и 1.680, для разл-я с a = 0.05 и b = 0.1 нужно кол-во материала 11
+Пар-ы 1.5 и 1.878, для разл-я с a = 0.05 и b = 0.1 нужно кол-во материала 4
+Пар-ы 1.5 и 2.294, для разл-я с a = 0.05 и b = 0.1 нужно кол-во материала 3
+\end{Verbatim}
+}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
